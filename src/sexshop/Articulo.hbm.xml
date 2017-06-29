@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 29-jun-2017 17:59:52 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="sexshop.Articulo" table="articulo" catalog="cesar" optimistic-lock="version">
+        <id name="idproducto" type="java.lang.Integer">
+            <column name="idproducto" />
+            <generator class="identity" />
+        </id>
+        <property name="imagenproducto" type="binary">
+            <column name="imagenproducto" />
+        </property>
+        <property name="nombreProducto" type="string">
+            <column name="`Nombre Producto`" length="45" />
+        </property>
+        <property name="descripcion" type="string">
+            <column name="descripcion" length="45" />
+        </property>
+        <property name="precioCompra" type="java.lang.Float">
+            <column name="precio_compra" precision="12" scale="0" />
+        </property>
+        <property name="precioVenta" type="java.lang.Float">
+            <column name="precio_venta" precision="12" scale="0" />
+        </property>
+        <property name="cantidadDisponible" type="java.lang.Integer">
+            <column name="cantidad_disponible" />
+        </property>
+        <property name="categoria" type="string">
+            <column name="categoria" length="45" not-null="true" />
+        </property>
+        <set name="detalleventas" table="detalleventa" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="articulo_idproducto" not-null="true" />
+            </key>
+            <one-to-many class="sexshop.Detalleventa" />
+        </set>
+        <set name="detalledecompras" table="detalledecompra" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="articulo_idproducto" not-null="true" />
+            </key>
+            <one-to-many class="sexshop.Detalledecompra" />
+        </set>
+    </class>
+</hibernate-mapping>
