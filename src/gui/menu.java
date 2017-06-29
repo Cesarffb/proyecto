@@ -352,7 +352,7 @@ public class menu extends javax.swing.JFrame {
             int id = Integer.parseInt(ID);
             if(id<CILIMITE){
                 Articulo pro = (Articulo)st.load(Articulo.class, id
-                );
+                ); 
                 EnviarRes(pro.getIdproducto(), pro.getNombreProducto(),
                             pro.getCantidadDisponible(),pro.getPrecioCompra(),
                             pro.getPrecioVenta(), pro.getCategoria(),
