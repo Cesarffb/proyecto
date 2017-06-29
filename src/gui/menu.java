@@ -11,6 +11,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import org.hibernate.Session;
 import sexshop.Articulo;
+import sexshop.Cliente;
 import sexshop.HibernateUtil;
 
 /**
@@ -94,6 +95,8 @@ public class menu extends javax.swing.JFrame {
         jLabel3.setText("Cantidad de Clientes: ");
 
         t_cantidad.setForeground(new java.awt.Color(255, 255, 255));
+
+        t_clientes.setForeground(new java.awt.Color(255, 255, 255));
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -336,42 +339,45 @@ public class menu extends javax.swing.JFrame {
         // Busqueda rapida
         //panelBotones.setVisible(false);
         String ID = t_busqueda.getText();
+        if(ID.equals("")){
+            JOptionPane.showMessageDialog(this, "Ingrese RUC / Nombre / N.Cedula o ID");
+        }
         Session st = HibernateUtil.getSessionFactory().openSession();
         st.beginTransaction();
         List<Articulo> lista = (List<Articulo>)st.createQuery("From Articulo").list();
-        if(Integer.parseInt(ID)<CILIMITE){
-            try {
-                int id = Integer.parseInt(ID);
-            }
-            catch(Exception e){
-                System.out.println("Se ha ingresado un nombre de producto");
-                for (Iterator<Articulo> it = lista.iterator(); it.hasNext();) {
-                    Articulo pro = it.next();
-                    if(pro.getNombreProducto().equals(ID)){
-                        System.out.println(pro.getIdproducto());
-                        EnviarRes(pro.getIdproducto(), pro.getNombreProducto(),
-                                pro.getCantidadDisponible(),pro.getPrecioCompra(),
-                                pro.getPrecioVenta(), pro.getCategoria(),
-                                pro.getImagenproducto(), pro.getDescripcion());
-                        return;
-                    }
-                }
-                JOptionPane.showMessageDialog(this, "No encontrado");
-            }
-        }
-        else{
-            //Lo mismo de arriba pero para la tabla clientes
-        }
+        List<Cliente> listaC = (List<Cliente>)st.createQuery("From Cliente").list();
+        
         try{
-            Articulo pro = (Articulo)st.load(Articulo.class, Integer.parseInt(ID));
-            EnviarRes(pro.getIdproducto(), pro.getNombreProducto(),
+            //ID o Cedula ingresado
+            int id = Integer.parseInt(ID);
+            if(id<CILIMITE){
+                Articulo pro = (Articulo)st.load(Articulo.class, id
+                );
+                EnviarRes(pro.getIdproducto(), pro.getNombreProducto(),
                             pro.getCantidadDisponible(),pro.getPrecioCompra(),
                             pro.getPrecioVenta(), pro.getCategoria(),
                             pro.getImagenproducto(), pro.getDescripcion());
-            //Todos los datos en prod
-            //EnviarRes()
+            }
+            else{
+                Cliente pro = (Cliente)st.load(Cliente.class, id);
+                EnviarResC(pro.getCedula(), pro.getNombreRazonSocial(), pro.getDireccion()
+                            , pro.getRuc(), pro.getTelefono(), pro.getCorreoElectronico());
+            }
         }
         catch(Exception e){
+            //Nombre o RUC ingresado
+            System.out.println("Se ha ingresado un nombre de producto");
+            for (Iterator<Articulo> it = lista.iterator(); it.hasNext();) {
+                Articulo pro = it.next();
+                if(pro.getNombreProducto().equals(ID)){
+                    System.out.println(pro.getIdproducto());
+                    EnviarRes(pro.getIdproducto(), pro.getNombreProducto(),
+                              pro.getCantidadDisponible(),pro.getPrecioCompra(),
+                              pro.getPrecioVenta(), pro.getCategoria(),
+                              pro.getImagenproducto(), pro.getDescripcion());
+                    return;
+                    }
+                }
             JOptionPane.showMessageDialog(this, "No encontrado");
         }
         t_busqueda.setRequestFocusEnabled(true);
@@ -443,14 +449,16 @@ public class menu extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void EnviarRes(Integer idproducto, String nombreProducto, Integer cantidadDisponible, Float precioCompra, Float precioVenta, String categoria, byte[] imagenproducto, String descripcion) {
-        resultados RE = new resultados();
+        /*Resultados de busqueda rapida por ID o nombre de articulos*/
+        resultadosA RE = new resultadosA();
         RE.llenar(idproducto, nombreProducto, cantidadDisponible, precioCompra,
                 precioVenta, categoria, imagenproducto, descripcion);
         RE.setLocationRelativeTo(this);
         RE.setVisible(true);
     }
-    private List updateAll() {
-       Session  st;
+    private void updateAll() {
+        /*Llamado al inicio del programa*/
+        Session  st;
         st = HibernateUtil.getSessionFactory().openSession();
         st.beginTransaction();
         List ListaProductos = new ArrayList();
@@ -460,7 +468,22 @@ public class menu extends javax.swing.JFrame {
             System.out.println(pro.getNombreProducto());
             ListaProductos.add(pro);
         }
+        List ListaClientes = new ArrayList();
+        List<Cliente> listaC = (List<Cliente>)st.createQuery("From Cliente").list();
+        for (Iterator<Cliente> it = listaC.iterator(); it.hasNext();) {
+            Cliente pro = it.next();
+            System.out.println(pro.getCedula());
+            ListaClientes.add(pro);
+        }
+        t_clientes.setText(Integer.toString(ListaClientes.size()));
         t_cantidad.setText(Integer.toString(ListaProductos.size()));
-        return ListaProductos;
+        return;
+    }
+
+    private void EnviarResC(int cedula, String nombreRazonSocial, String direccion, String ruc, String telefono, String correoElectronico) {
+        resultadosC RE = new resultadosC();
+        RE.llenarC(cedula, nombreRazonSocial, direccion, ruc, telefono, correoElectronico);
+        RE.setLocationRelativeTo(this);
+        RE.setVisible(true);
     }
 }
