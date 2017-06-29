@@ -1,2 +1,2 @@
-# proyecto
-The project of Luis and Cesar
+# Proyecto
+***The project of Luis and Cesar***
