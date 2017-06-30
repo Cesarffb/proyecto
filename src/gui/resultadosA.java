@@ -1,20 +1,16 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package gui;
 
 /**
  *
  * @author ccp
  */
-public class resultados extends javax.swing.JFrame {
+public class resultadosA extends javax.swing.JFrame {
 
     /**
      * Creates new form resultados
      */
-    public resultados() {
+    public resultadosA() {
         initComponents();
     }
 
@@ -94,34 +90,29 @@ public class resultados extends javax.swing.JFrame {
         jPanel3.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 330, -1, -1));
 
         res_articulo.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        res_articulo.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true));
         jPanel3.add(res_articulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 146, 270, 20));
 
         res_precioV.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         res_precioV.setText(" ");
-        res_precioV.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true));
         jPanel3.add(res_precioV, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 330, 270, 20));
 
         res_precioC.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         res_precioC.setText(" ");
-        res_precioC.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true));
         jPanel3.add(res_precioC, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 300, 270, 20));
 
         res_cantidad.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         res_cantidad.setText(" ");
-        res_cantidad.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true));
         jPanel3.add(res_cantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 270, 270, 20));
 
         res_categoria.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         res_categoria.setText(" ");
-        res_categoria.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true));
         jPanel3.add(res_categoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 170, 270, 20));
 
         res_descripcion.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         res_descripcion.setText(" ");
         res_descripcion.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         res_descripcion.setAutoscrolls(true);
-        res_descripcion.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true));
+        res_descripcion.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 255, 255), 1, true));
         jPanel3.add(res_descripcion, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 200, 270, 60));
 
         image.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -151,7 +142,7 @@ public class resultados extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 457, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -201,20 +192,27 @@ public class resultados extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(resultados.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(resultadosA.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(resultados.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(resultadosA.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(resultados.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(resultadosA.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(resultados.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(resultadosA.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new resultados().setVisible(true);
+                new resultadosA().setVisible(true);
             }
         });
     }

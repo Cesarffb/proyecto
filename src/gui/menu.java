@@ -329,6 +329,13 @@ public class menu extends javax.swing.JFrame {
 
     private void actProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actProductoActionPerformed
         // Actualizar Producto
+        UpdateArticulo form = new UpdateArticulo(this, true);
+        Session st = HibernateUtil.getSessionFactory().openSession();
+        st.beginTransaction();
+        List<Articulo> lista = (List<Articulo>)st.createQuery("From Articulo").list();
+        form.LlenarTabla(lista);
+        form.setLocationRelativeTo(this);
+        form.setVisible(true);
     }//GEN-LAST:event_actProductoActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
