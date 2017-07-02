@@ -2,6 +2,7 @@
 package gui;
 
 
+import java.awt.event.ActionListener;
 import java.util.Iterator;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -15,7 +16,7 @@ import sexshop.HibernateUtil;
  * @author ccp
  */
 public class UpdateArticulo extends javax.swing.JDialog {
-
+    Session st = HibernateUtil.getSessionFactory().openSession();
     /**
      * Creates new form UpdateArticulo
      */
@@ -24,6 +25,24 @@ public class UpdateArticulo extends javax.swing.JDialog {
         initComponents();
         panel_update.setVisible(false);
         this.setSize(550, 460);
+    }
+
+    public UpdateArticulo(java.awt.Frame parent, boolean modal, boolean b0) {
+        super(parent, modal);
+        initComponents();
+        panel_update.setVisible(false);
+        this.titulo_info.setText("Lista de Articulos");
+        this.setSize(550, 460);
+        
+        /* Mostrar informacion de articulo */
+        for( ActionListener al : b_buscar.getActionListeners() ) {
+            b_buscar.removeActionListener( al );
+        }
+        b_buscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                b_buscarActionPerformed2(evt);
+            }
+        });
     }
 
     /**
@@ -38,12 +57,12 @@ public class UpdateArticulo extends javax.swing.JDialog {
         jPanel4 = new javax.swing.JPanel();
         panel_busqueda = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        titulo_info = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabla = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         t_busqueda = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        b_buscar = new javax.swing.JButton();
         panel_update = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
@@ -84,11 +103,11 @@ public class UpdateArticulo extends javax.swing.JDialog {
 
         jPanel3.setBackground(new java.awt.Color(0, 153, 153));
 
-        jLabel1.setBackground(new java.awt.Color(0, 204, 153));
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Actualizar Producto");
+        titulo_info.setBackground(new java.awt.Color(0, 204, 153));
+        titulo_info.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        titulo_info.setForeground(new java.awt.Color(255, 255, 255));
+        titulo_info.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        titulo_info.setText("Actualizar Producto");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -96,13 +115,13 @@ public class UpdateArticulo extends javax.swing.JDialog {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(139, 139, 139)
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
+                .addComponent(titulo_info, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
                 .addGap(120, 120, 120))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(titulo_info, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 10, Short.MAX_VALUE))
         );
 
@@ -157,10 +176,10 @@ public class UpdateArticulo extends javax.swing.JDialog {
                 .addContainerGap())
         );
 
-        jButton1.setText("Buscar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        b_buscar.setText("Buscar");
+        b_buscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                b_buscarActionPerformed(evt);
             }
         });
 
@@ -170,11 +189,11 @@ public class UpdateArticulo extends javax.swing.JDialog {
             panel_busquedaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(panel_busquedaLayout.createSequentialGroup()
-                .addGap(211, 211, 211)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(jScrollPane1)
+            .addGroup(panel_busquedaLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(b_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panel_busquedaLayout.setVerticalGroup(
             panel_busquedaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -183,9 +202,9 @@ public class UpdateArticulo extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
+                .addComponent(b_buscar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 273, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 272, Short.MAX_VALUE))
         );
 
         getContentPane().add(panel_busqueda);
@@ -285,6 +304,11 @@ public class UpdateArticulo extends javax.swing.JDialog {
         );
 
         jButton3.setText("Actualizar");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jButton4.setText("Atras");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
@@ -314,7 +338,7 @@ public class UpdateArticulo extends javax.swing.JDialog {
             .addGroup(panel_updateLayout.createSequentialGroup()
                 .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, 339, Short.MAX_VALUE)
+                .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, 338, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panel_updateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton3)
@@ -331,13 +355,56 @@ public class UpdateArticulo extends javax.swing.JDialog {
         // no usado
     }//GEN-LAST:event_t_busquedaActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void b_buscarActionPerformed2(java.awt.event.ActionEvent evt) { 
+        resultadosA info = new resultadosA(this, true);
+        info.setAlwaysOnTop(true);
+        info.setLocationRelativeTo(this);
+        String ID = t_busqueda.getText();
+        if(ID.equals("")){
+            JOptionPane.showMessageDialog(this, "Ingrese Nombre o ID de producto");
+        }
+        //Session st = HibernateUtil.getSessionFactory().openSession();
+        st.beginTransaction();
+        List<Articulo> lista = (List<Articulo>)st.createQuery("From Articulo").list();
+        
+        try{
+            int id = Integer.parseInt(ID);
+            Articulo pro = (Articulo)st.load(Articulo.class, id
+                ); 
+                info.llenar(pro.getIdproducto(), pro.getNombreProducto(),
+                            pro.getCantidadDisponible(),pro.getPrecioCompra(),
+                            pro.getPrecioVenta(), pro.getCategoria(),
+                            pro.getImagenproducto(), pro.getDescripcion());
+        }
+        catch(Exception e){
+            //Nombre ingresado
+            System.out.println("Se ha ingresado un nombre de producto");
+            for (Iterator<Articulo> it = lista.iterator(); it.hasNext();) {
+                Articulo pro = it.next();
+                if(pro.getNombreProducto().equals(ID)){
+                    System.out.println(pro.getIdproducto());
+                    info.llenar(pro.getIdproducto(), pro.getNombreProducto(),
+                              pro.getCantidadDisponible(),pro.getPrecioCompra(),
+                              pro.getPrecioVenta(), pro.getCategoria(),
+                              pro.getImagenproducto(), pro.getDescripcion());
+                    t_busqueda.requestFocus();
+                    return;
+                    }
+                }
+            JOptionPane.showMessageDialog(this, "No encontrado");
+            return;
+        }
+        this.setVisible(false);
+        info.setVisible(true);
+        t_busqueda.requestFocus();
+    }
+    private void b_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_buscarActionPerformed
         // Busqueda rapida de actualizacion
         String ID = t_busqueda.getText();
         if(ID.equals("")){
             JOptionPane.showMessageDialog(this, "Ingrese Nombre o ID de producto");
         }
-        Session st = HibernateUtil.getSessionFactory().openSession();
+        //Session st = HibernateUtil.getSessionFactory().openSession();
         st.beginTransaction();
         List<Articulo> lista = (List<Articulo>)st.createQuery("From Articulo").list();
         
@@ -361,15 +428,20 @@ public class UpdateArticulo extends javax.swing.JDialog {
                               pro.getCantidadDisponible(),pro.getPrecioCompra(),
                               pro.getPrecioVenta(), pro.getCategoria(),
                               pro.getImagenproducto(), pro.getDescripcion());
+                    t_busqueda.requestFocus();
+                    panel_busqueda.setVisible(false);
+                    panel_update.setVisible(true);
                     return;
                     }
                 }
             JOptionPane.showMessageDialog(this, "No encontrado");
+            return;
         }
+        t_busqueda.requestFocus();
         panel_busqueda.setVisible(false);
         panel_update.setVisible(true);
         //st.close();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_b_buscarActionPerformed
 
     private void t_productoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_t_productoKeyPressed
         //Muestra lo ingresado despues de ingresar el siguiente caracter
@@ -411,10 +483,42 @@ public class UpdateArticulo extends javax.swing.JDialog {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // Volver al jdialog update info
+        t_busqueda.setText("");
+        t_busqueda.requestFocus();
         panel_update.setVisible(false);
         panel_busqueda.setVisible(true);
     }//GEN-LAST:event_jButton4ActionPerformed
 
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // Actualizar producto
+        String producto, cate, precioC, precioV, cant, IDD;
+        IDD = t_busqueda.getText();
+        producto = t_producto.getText();
+        cate = t_categoria.getText();
+        precioC = this.t_precioC.getText();
+        precioV = this.t_precioV.getText();
+        cant = this.t_cantidad.getText();
+        System.out.println(IDD);
+        try{
+            st.beginTransaction();
+            int idArt = Integer.parseInt(IDD);
+            
+            Articulo art = (Articulo)st.load(Articulo.class, idArt);
+            art.setNombreProducto(producto);
+            //art.setImagenproducto(imagenproducto);
+            art.setCategoria(cate);
+            art.setPrecioCompra(Float.parseFloat(precioC));
+            art.setPrecioVenta(Float.parseFloat(precioV));
+            art.setCantidadDisponible(Integer.parseInt(cant));
+            st.update(art);
+            st.getTransaction().commit();
+            JOptionPane.showMessageDialog(null, "Registro de cliente actualizado.");
+       }
+       catch(Exception e){
+           JOptionPane.showMessageDialog(null, "Error - Registro no actualizado.");
+       }
+    }//GEN-LAST:event_jButton3ActionPerformed
+    
     /**
      * @param args the command line arguments
      */
@@ -458,11 +562,10 @@ public class UpdateArticulo extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton b_buscar;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -488,6 +591,7 @@ public class UpdateArticulo extends javax.swing.JDialog {
     private javax.swing.JTextField t_precioV;
     private javax.swing.JTextField t_producto;
     private javax.swing.JTable tabla;
+    private javax.swing.JLabel titulo_info;
     // End of variables declaration//GEN-END:variables
 
     void LlenarTabla(List<Articulo> lista) {
@@ -502,6 +606,10 @@ public class UpdateArticulo extends javax.swing.JDialog {
                             pro.getPrecioVenta(), pro.getCantidadDisponible()
             });
         }
+        this.tabla.getColumnModel().getColumn(0).setPreferredWidth(20);
+        this.tabla.getColumnModel().getColumn(1).setPreferredWidth(200);
+        this.tabla.getColumnModel().getColumn(2).setPreferredWidth(80);
+        this.tabla.getColumnModel().getColumn(3).setPreferredWidth(80);
         tabla.setModel(dtm);
         /*for(int row = 0; row < 2; row++) {
         for(int column = 0; column < 2; column++) {

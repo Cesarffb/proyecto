@@ -166,21 +166,21 @@ public class menu extends javax.swing.JFrame {
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
         jPanel5.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true));
 
-        actProducto.setText("Actualizar Producto");
+        actProducto.setText("Actualizar Articulos");
         actProducto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 actProductoActionPerformed(evt);
             }
         });
 
-        regProducto.setText("Registro de Productos");
+        regProducto.setText("Registro de Articulos");
         regProducto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 regProductoActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Informe");
+        jButton2.setText("Lista de Articulos");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -214,7 +214,7 @@ public class menu extends javax.swing.JFrame {
         jPanel6.setBackground(new java.awt.Color(255, 255, 255));
         jPanel6.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true));
 
-        jButton4.setText("Informe");
+        jButton4.setText("Lista de Clientes");
 
         jButton5.setText("Actualizar Cliente");
 
@@ -302,21 +302,21 @@ public class menu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        //Mostrar Informe de Productos
-        /*Session st = HibernateUtil.getSessionFactory().openSession();
+        //Mostrar Informe de Articulos
+        Session st = HibernateUtil.getSessionFactory().openSession();
         st.beginTransaction();
         List ListaProductos = new ArrayList(); //No usado
-        List<Productos> lista = (List<Productos>)st.createQuery("From Productos").list();
-        for (Iterator<Productos> it = lista.iterator(); it.hasNext();) {
-            Productos pro = it.next();
+        List<Articulo> lista = (List<Articulo>)st.createQuery("From Articulo").list();
+        for (Iterator<Articulo> it = lista.iterator(); it.hasNext();) {
+            Articulo pro = it.next();
             //System.out.println(pro.getProducto());
             ListaProductos.add(pro);
         }
-        Informe inf = new Informe();
+        UpdateArticulo inf = new UpdateArticulo(this, true, true);
         inf.LlenarTabla(lista);
-        inf.setTitle("Informe xd");
-        inf.setLocationRelativeTo(null);
-        inf.setVisible(true);*/
+        inf.setTitle("Lista de Articulos xd");
+        inf.setLocationRelativeTo(this);
+        inf.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void regProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_regProductoActionPerformed
@@ -324,7 +324,7 @@ public class menu extends javax.swing.JFrame {
         regArticulo form = new regArticulo(this, true);
         form.setLocationRelativeTo(this);
         form.setVisible(true);
-        //this.updateAll();
+        this.updateAll();
     }//GEN-LAST:event_regProductoActionPerformed
 
     private void actProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actProductoActionPerformed
@@ -348,6 +348,7 @@ public class menu extends javax.swing.JFrame {
         String ID = t_busqueda.getText();
         if(ID.equals("")){
             JOptionPane.showMessageDialog(this, "Ingrese RUC / Nombre / N.Cedula o ID");
+            return;
         }
         Session st = HibernateUtil.getSessionFactory().openSession();
         st.beginTransaction();
@@ -482,6 +483,7 @@ public class menu extends javax.swing.JFrame {
             System.out.println(pro.getCedula());
             ListaClientes.add(pro);
         }
+        this.t_busqueda.requestFocus();
         t_clientes.setText(Integer.toString(ListaClientes.size()));
         t_cantidad.setText(Integer.toString(ListaProductos.size()));
         return;
@@ -494,3 +496,47 @@ public class menu extends javax.swing.JFrame {
         RE.setVisible(true);
     }
 }
+
+
+
+
+/*
+public void eliminar(){
+   int showConfirmDialog = JOptionPane.showConfirmDialog(null, "Eliminación de Registro", "Desea eliminar este registro.", JOptionPane.YES_NO_OPTION);
+   if(showConfirmDialog == 1){
+       JOptionPane.showMessageDialog(null, "Registro no eliminado.");
+   }
+   else{
+       st.beginTransaction();
+       int selectedRow = this.jTable1.getSelectedRow();
+       Object valueAt = model.getValueAt(selectedRow, 0);
+       int idArt = Integer.parseInt(valueAt.toString());
+       Articulo art = (Articulo)st.load(Articulo.class, idArt);
+       st.delete(art);
+       st.getTransaction().commit();
+       JOptionPane.showMessageDialog(null, "Registro eliminado.");
+       arranque();
+   }
+
+}
+
+public void retornarArticulo(){
+    if(this.jTable1.isEnabled()){
+        int selectedRow = this.jTable1.getSelectedRow();
+        Object valueAt = model.getValueAt(selectedRow, 0);
+        int idArt = Integer.parseInt(valueAt.toString());
+        Articulo art = (Articulo)st.load(Articulo.class, idArt);
+        this.id.setText(String.valueOf(art.getId()));
+        this.des.setText(art.getDes());
+        this.tipo.setSelectedItem(art.getTipo().getDes());
+        this.pco.setText(String.valueOf(art.getPco()));
+        this.pve.setText(String.valueOf(art.getPve()));
+        this.por.setText(String.valueOf(art.getPor()));
+        this.can.setText(String.valueOf(art.getCan()));
+        this.editar.setEnabled(true);
+        this.eliminar.setEnabled(true);
+        this.nuevo.setEnabled(false);
+    }    
+}
+
+*/

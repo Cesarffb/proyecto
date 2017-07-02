@@ -309,7 +309,7 @@
           <SubComponents>
             <Component class="javax.swing.JButton" name="actProducto">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Actualizar Producto"/>
+                <Property name="text" type="java.lang.String" value="Actualizar Articulos"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="actProductoActionPerformed"/>
@@ -317,7 +317,7 @@
             </Component>
             <Component class="javax.swing.JButton" name="regProducto">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Registro de Productos"/>
+                <Property name="text" type="java.lang.String" value="Registro de Articulos"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="regProductoActionPerformed"/>
@@ -325,7 +325,7 @@
             </Component>
             <Component class="javax.swing.JButton" name="jButton2">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Informe"/>
+                <Property name="text" type="java.lang.String" value="Lista de Articulos"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton2ActionPerformed"/>
@@ -378,7 +378,7 @@
           <SubComponents>
             <Component class="javax.swing.JButton" name="jButton4">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Informe"/>
+                <Property name="text" type="java.lang.String" value="Lista de Clientes"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JButton" name="jButton5">

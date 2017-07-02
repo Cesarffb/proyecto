@@ -7,11 +7,20 @@ package gui;
  */
 public class resultadosA extends javax.swing.JFrame {
 
+    private UpdateArticulo u;
+
     /**
      * Creates new form resultados
      */
     public resultadosA() {
         initComponents();
+        b_atras.setVisible(false);
+    }
+
+    public resultadosA(UpdateArticulo aThis, boolean b) {
+        initComponents();
+        this.u = aThis;
+        b_atras.setVisible(true);
     }
 
     /**
@@ -42,6 +51,8 @@ public class resultadosA extends javax.swing.JFrame {
         image = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        b_atras = new javax.swing.JButton();
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -135,7 +146,19 @@ public class resultadosA extends javax.swing.JFrame {
                 jButton2ActionPerformed(evt);
             }
         });
-        jPanel3.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 380, 70, -1));
+        jPanel3.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 380, 70, -1));
+
+        jButton3.setText("Actualizar");
+        jButton3.setEnabled(false);
+        jPanel3.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 380, -1, -1));
+
+        b_atras.setText("Atras");
+        b_atras.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                b_atrasActionPerformed(evt);
+            }
+        });
+        jPanel3.add(b_atras, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 380, -1, -1));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -174,6 +197,15 @@ public class resultadosA extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // Llamar a una ventana para seleccionar un cliente o registrarlo xd
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void b_atrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_atrasActionPerformed
+        // Volver a UpdateArticulo
+        /*UpdateArticulo u = new UpdateArticulo(this, true, true);
+        u.setLocationRelativeTo(null);
+        u.setVisible(true);*/
+        this.setVisible(false);
+        this.u.setVisible(true);
+    }//GEN-LAST:event_b_atrasActionPerformed
 
     /**
      * @param args the command line arguments
@@ -218,9 +250,11 @@ public class resultadosA extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton b_atras;
     private javax.swing.JLabel image;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
