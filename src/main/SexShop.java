@@ -1,6 +1,7 @@
 
 package main;
 
+import gui.Login;
 import gui.menu;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -19,9 +20,9 @@ public class SexShop {
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel"); 
         } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException ex) { 
         }
-        menu ui = new menu();
+        Login ui = new Login();
         ui.setLocationRelativeTo(null);
-        ui.setTitle("Menu");
+        ui.setTitle("Inicia Sesion..");
         ui.setVisible(true);
     }
     

@@ -1,5 +1,5 @@
 package sexshop;
-// Generated 29-jun-2017 17:59:48 by Hibernate Tools 4.3.1
+// Generated 07-jul-2017 20:54:18 by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -12,33 +12,33 @@ public class Detalleventa  implements java.io.Serializable {
 
      private int id;
      private Articulo articulo;
-     private Cliente cliente;
      private Funcionario funcionario;
+     private int clienteCedula;
      private Integer cantidad;
      private Float importe;
      private Date fecha;
-     private int clienteIdCliente;
+     private int usuariosId;
 
     public Detalleventa() {
     }
 
 	
-    public Detalleventa(int id, Articulo articulo, Cliente cliente, Funcionario funcionario, int clienteIdCliente) {
+    public Detalleventa(int id, Articulo articulo, Funcionario funcionario, int clienteCedula, int usuariosId) {
         this.id = id;
         this.articulo = articulo;
-        this.cliente = cliente;
         this.funcionario = funcionario;
-        this.clienteIdCliente = clienteIdCliente;
+        this.clienteCedula = clienteCedula;
+        this.usuariosId = usuariosId;
     }
-    public Detalleventa(int id, Articulo articulo, Cliente cliente, Funcionario funcionario, Integer cantidad, Float importe, Date fecha, int clienteIdCliente) {
+    public Detalleventa(int id, Articulo articulo, Funcionario funcionario, int clienteCedula, Integer cantidad, Float importe, Date fecha, int usuariosId) {
        this.id = id;
        this.articulo = articulo;
-       this.cliente = cliente;
        this.funcionario = funcionario;
+       this.clienteCedula = clienteCedula;
        this.cantidad = cantidad;
        this.importe = importe;
        this.fecha = fecha;
-       this.clienteIdCliente = clienteIdCliente;
+       this.usuariosId = usuariosId;
     }
    
     public int getId() {
@@ -55,19 +55,19 @@ public class Detalleventa  implements java.io.Serializable {
     public void setArticulo(Articulo articulo) {
         this.articulo = articulo;
     }
-    public Cliente getCliente() {
-        return this.cliente;
-    }
-    
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
     public Funcionario getFuncionario() {
         return this.funcionario;
     }
     
     public void setFuncionario(Funcionario funcionario) {
         this.funcionario = funcionario;
+    }
+    public int getClienteCedula() {
+        return this.clienteCedula;
+    }
+    
+    public void setClienteCedula(int clienteCedula) {
+        this.clienteCedula = clienteCedula;
     }
     public Integer getCantidad() {
         return this.cantidad;
@@ -90,12 +90,12 @@ public class Detalleventa  implements java.io.Serializable {
     public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
-    public int getClienteIdCliente() {
-        return this.clienteIdCliente;
+    public int getUsuariosId() {
+        return this.usuariosId;
     }
     
-    public void setClienteIdCliente(int clienteIdCliente) {
-        this.clienteIdCliente = clienteIdCliente;
+    public void setUsuariosId(int usuariosId) {
+        this.usuariosId = usuariosId;
     }
 
 

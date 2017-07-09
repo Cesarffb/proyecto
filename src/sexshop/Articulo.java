@@ -1,5 +1,5 @@
 package sexshop;
-// Generated 29-jun-2017 17:59:48 by Hibernate Tools 4.3.1
+// Generated 07-jul-2017 20:54:18 by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -19,8 +19,8 @@ public class Articulo  implements java.io.Serializable {
      private Float precioVenta;
      private Integer cantidadDisponible;
      private String categoria;
-     private Set detalleventas = new HashSet(0);
      private Set detalledecompras = new HashSet(0);
+     private Set detalleventas = new HashSet(0);
 
     public Articulo() {
     }
@@ -29,7 +29,7 @@ public class Articulo  implements java.io.Serializable {
     public Articulo(String categoria) {
         this.categoria = categoria;
     }
-    public Articulo(byte[] imagenproducto, String nombreProducto, String descripcion, Float precioCompra, Float precioVenta, Integer cantidadDisponible, String categoria, Set detalleventas, Set detalledecompras) {
+    public Articulo(byte[] imagenproducto, String nombreProducto, String descripcion, Float precioCompra, Float precioVenta, Integer cantidadDisponible, String categoria, Set detalledecompras, Set detalleventas) {
        this.imagenproducto = imagenproducto;
        this.nombreProducto = nombreProducto;
        this.descripcion = descripcion;
@@ -37,8 +37,8 @@ public class Articulo  implements java.io.Serializable {
        this.precioVenta = precioVenta;
        this.cantidadDisponible = cantidadDisponible;
        this.categoria = categoria;
-       this.detalleventas = detalleventas;
        this.detalledecompras = detalledecompras;
+       this.detalleventas = detalleventas;
     }
    
     public Integer getIdproducto() {
@@ -97,19 +97,19 @@ public class Articulo  implements java.io.Serializable {
     public void setCategoria(String categoria) {
         this.categoria = categoria;
     }
-    public Set getDetalleventas() {
-        return this.detalleventas;
-    }
-    
-    public void setDetalleventas(Set detalleventas) {
-        this.detalleventas = detalleventas;
-    }
     public Set getDetalledecompras() {
         return this.detalledecompras;
     }
     
     public void setDetalledecompras(Set detalledecompras) {
         this.detalledecompras = detalledecompras;
+    }
+    public Set getDetalleventas() {
+        return this.detalleventas;
+    }
+    
+    public void setDetalleventas(Set detalleventas) {
+        this.detalleventas = detalleventas;
     }
 
 

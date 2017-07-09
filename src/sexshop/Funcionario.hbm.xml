@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 29-jun-2017 17:59:52 by Hibernate Tools 4.3.1 -->
+<!-- Generated 07-jul-2017 20:54:20 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-    <class name="sexshop.Funcionario" table="funcionario" catalog="cesar" optimistic-lock="version">
-        <id name="id" type="java.lang.Integer">
-            <column name="Id" />
-            <generator class="identity" />
+    <class name="sexshop.Funcionario" table="funcionario" catalog="sexshop" optimistic-lock="version">
+        <id name="cedula" type="string">
+            <column name="Cedula" length="45" />
+            <generator class="assigned" />
         </id>
         <property name="nombre" type="string">
             <column name="Nombre" length="45" />
@@ -20,20 +20,23 @@
         <property name="telefono" type="string">
             <column name="Telefono" length="45" />
         </property>
-        <property name="cargo" type="string">
-            <column name="Cargo" length="45" />
+        <property name="cargo" type="java.lang.Integer">
+            <column name="Cargo" />
         </property>
-        <set name="detalledecompras" table="detalledecompra" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="Usuarios_Id" not-null="true" />
-            </key>
-            <one-to-many class="sexshop.Detalledecompra" />
-        </set>
+        <property name="pass" type="string">
+            <column name="Pass" length="45" />
+        </property>
         <set name="detalleventas" table="detalleventa" inverse="true" lazy="true" fetch="select">
             <key>
-                <column name="Usuarios_Id" not-null="true" />
+                <column name="Funcionario_Cedula" length="45" not-null="true" />
             </key>
             <one-to-many class="sexshop.Detalleventa" />
+        </set>
+        <set name="detalledecompras" table="detalledecompra" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="Funcionario_Cedula" length="45" not-null="true" />
+            </key>
+            <one-to-many class="sexshop.Detalledecompra" />
         </set>
     </class>
 </hibernate-mapping>

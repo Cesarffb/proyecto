@@ -1,5 +1,5 @@
 package sexshop;
-// Generated 29-jun-2017 17:59:48 by Hibernate Tools 4.3.1
+// Generated 07-jul-2017 20:54:18 by Hibernate Tools 4.3.1
 
 
 import java.util.Date;

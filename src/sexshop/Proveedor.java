@@ -1,5 +1,5 @@
 package sexshop;
-// Generated 29-jun-2017 17:59:48 by Hibernate Tools 4.3.1
+// Generated 07-jul-2017 20:54:18 by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -12,6 +12,7 @@ public class Proveedor  implements java.io.Serializable {
 
 
      private Integer id;
+     private String ruc;
      private String descripcion;
      private String direccion;
      private String telefono;
@@ -21,7 +22,8 @@ public class Proveedor  implements java.io.Serializable {
     public Proveedor() {
     }
 
-    public Proveedor(String descripcion, String direccion, String telefono, String correoElectronico, Set detalledecompras) {
+    public Proveedor(String ruc, String descripcion, String direccion, String telefono, String correoElectronico, Set detalledecompras) {
+       this.ruc = ruc;
        this.descripcion = descripcion;
        this.direccion = direccion;
        this.telefono = telefono;
@@ -35,6 +37,13 @@ public class Proveedor  implements java.io.Serializable {
     
     public void setId(Integer id) {
         this.id = id;
+    }
+    public String getRuc() {
+        return this.ruc;
+    }
+    
+    public void setRuc(String ruc) {
+        this.ruc = ruc;
     }
     public String getDescripcion() {
         return this.descripcion;

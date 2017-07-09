@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 29-jun-2017 17:59:52 by Hibernate Tools 4.3.1 -->
+<!-- Generated 07-jul-2017 20:54:20 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-    <class name="sexshop.Detalledecompra" table="detalledecompra" catalog="cesar" optimistic-lock="version">
+    <class name="sexshop.Detalledecompra" table="detalledecompra" catalog="sexshop" optimistic-lock="version">
         <id name="id" type="int">
             <column name="id" />
             <generator class="assigned" />
@@ -12,7 +12,7 @@
             <column name="articulo_idproducto" not-null="true" />
         </many-to-one>
         <many-to-one name="funcionario" class="sexshop.Funcionario" fetch="select">
-            <column name="Usuarios_Id" not-null="true" />
+            <column name="Funcionario_Cedula" length="45" not-null="true" />
         </many-to-one>
         <many-to-one name="proveedor" class="sexshop.Proveedor" fetch="select">
             <column name="Proveedor_Id" not-null="true" />

@@ -23,6 +23,13 @@ public class regCliente extends javax.swing.JDialog {
         this.t_ya.setVisible(false);
     }
 
+    public regCliente(java.awt.Frame parent, boolean modal, String text) {
+        super(parent, modal);
+        initComponents();
+        this.t_ya.setVisible(false);
+        this.t_ci.setText(text);
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

@@ -1,5 +1,5 @@
 package sexshop;
-// Generated 29-jun-2017 17:59:48 by Hibernate Tools 4.3.1
+// Generated 07-jul-2017 20:54:18 by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -11,34 +11,41 @@ import java.util.Set;
 public class Funcionario  implements java.io.Serializable {
 
 
-     private Integer id;
+     private String cedula;
      private String nombre;
      private String apellido;
      private String correo;
      private String telefono;
-     private String cargo;
-     private Set detalledecompras = new HashSet(0);
+     private Integer cargo;
+     private String pass;
      private Set detalleventas = new HashSet(0);
+     private Set detalledecompras = new HashSet(0);
 
     public Funcionario() {
     }
 
-    public Funcionario(String nombre, String apellido, String correo, String telefono, String cargo, Set detalledecompras, Set detalleventas) {
+	
+    public Funcionario(String cedula) {
+        this.cedula = cedula;
+    }
+    public Funcionario(String cedula, String nombre, String apellido, String correo, String telefono, Integer cargo, String pass, Set detalleventas, Set detalledecompras) {
+       this.cedula = cedula;
        this.nombre = nombre;
        this.apellido = apellido;
        this.correo = correo;
        this.telefono = telefono;
        this.cargo = cargo;
-       this.detalledecompras = detalledecompras;
+       this.pass = pass;
        this.detalleventas = detalleventas;
+       this.detalledecompras = detalledecompras;
     }
    
-    public Integer getId() {
-        return this.id;
+    public String getCedula() {
+        return this.cedula;
     }
     
-    public void setId(Integer id) {
-        this.id = id;
+    public void setCedula(String cedula) {
+        this.cedula = cedula;
     }
     public String getNombre() {
         return this.nombre;
@@ -68,19 +75,19 @@ public class Funcionario  implements java.io.Serializable {
     public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
-    public String getCargo() {
+    public Integer getCargo() {
         return this.cargo;
     }
     
-    public void setCargo(String cargo) {
+    public void setCargo(Integer cargo) {
         this.cargo = cargo;
     }
-    public Set getDetalledecompras() {
-        return this.detalledecompras;
+    public String getPass() {
+        return this.pass;
     }
     
-    public void setDetalledecompras(Set detalledecompras) {
-        this.detalledecompras = detalledecompras;
+    public void setPass(String pass) {
+        this.pass = pass;
     }
     public Set getDetalleventas() {
         return this.detalleventas;
@@ -88,6 +95,13 @@ public class Funcionario  implements java.io.Serializable {
     
     public void setDetalleventas(Set detalleventas) {
         this.detalleventas = detalleventas;
+    }
+    public Set getDetalledecompras() {
+        return this.detalledecompras;
+    }
+    
+    public void setDetalledecompras(Set detalledecompras) {
+        this.detalledecompras = detalledecompras;
     }
 
 

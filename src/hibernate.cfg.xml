@@ -43,10 +43,9 @@ Contributor(s):
   <session-factory>
     <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
     <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-    <property name="hibernate.connection.url">jdbc:mysql://localhost:8888/cesar</property>
+    <property name="hibernate.connection.url">jdbc:mysql://localhost:8888/sexshop</property>
     <property name="hibernate.connection.username">root</property>
     <property name="hibernate.connection.password">982905193</property>
-    <property name="hibernate.hbm2ddl.auto">update</property>
     <property name="hibernate.current_session_context_class">thread</property>
     <mapping resource="sexshop/Cliente.hbm.xml"/>
     <mapping resource="sexshop/Proveedor.hbm.xml"/>

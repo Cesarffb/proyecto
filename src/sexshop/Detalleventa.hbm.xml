@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 29-jun-2017 17:59:52 by Hibernate Tools 4.3.1 -->
+<!-- Generated 07-jul-2017 20:54:20 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-    <class name="sexshop.Detalleventa" table="detalleventa" catalog="cesar" optimistic-lock="version">
+    <class name="sexshop.Detalleventa" table="detalleventa" catalog="sexshop" optimistic-lock="version">
         <id name="id" type="int">
             <column name="id" />
             <generator class="assigned" />
@@ -11,12 +11,12 @@
         <many-to-one name="articulo" class="sexshop.Articulo" fetch="select">
             <column name="articulo_idproducto" not-null="true" />
         </many-to-one>
-        <many-to-one name="cliente" class="sexshop.Cliente" fetch="select">
-            <column name="Cliente_cedula" not-null="true" />
-        </many-to-one>
         <many-to-one name="funcionario" class="sexshop.Funcionario" fetch="select">
-            <column name="Usuarios_Id" not-null="true" />
+            <column name="Funcionario_Cedula" length="45" not-null="true" />
         </many-to-one>
+        <property name="clienteCedula" type="int">
+            <column name="Cliente_cedula" not-null="true" />
+        </property>
         <property name="cantidad" type="java.lang.Integer">
             <column name="Cantidad" />
         </property>
@@ -26,8 +26,8 @@
         <property name="fecha" type="date">
             <column name="Fecha" length="10" />
         </property>
-        <property name="clienteIdCliente" type="int">
-            <column name="Cliente_idCliente" not-null="true" />
+        <property name="usuariosId" type="int">
+            <column name="Usuarios_Id" not-null="true" />
         </property>
     </class>
 </hibernate-mapping>

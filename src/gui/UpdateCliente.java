@@ -1,6 +1,9 @@
-
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package gui;
-
 
 import java.awt.event.ActionListener;
 import java.util.Iterator;
@@ -8,50 +11,48 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import org.hibernate.Session;
-import sexshop.Articulo;
+import sexshop.Cliente;
 import sexshop.HibernateUtil;
 
 /**
  *
  * @author ccp
  */
-public class UpdateArticulo extends javax.swing.JDialog {
+public class UpdateCliente extends javax.swing.JDialog {
     Session st = HibernateUtil.getSessionFactory().openSession();
-    int ID;
     /**
-     * Creates new form UpdateArticulo
+     * Creates new form UpdateCliente
      * @param parent
      * @param modal
      */
-    public UpdateArticulo(java.awt.Frame parent, boolean modal) {
-        // TODO Sobreescribir evento de click en elemento de tabla (importante)
+    public UpdateCliente(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         st.beginTransaction();
         panel_update.setVisible(false);
         this.setSize(550, 460);
-        this.ID = 0;
     }
 
-    public UpdateArticulo(java.awt.Frame parent, boolean modal, boolean b0) {
+    public UpdateCliente(java.awt.Frame parent, boolean modal, boolean b0) {
         super(parent, modal);
         initComponents();
         //st.beginTransaction();
         panel_update.setVisible(false);
-        this.titulo_info.setText("Lista de Articulos");
+        this.titulo_info.setText("Lista de Clientes");
         this.setSize(550, 460);
-        
+        System.out.println("4");
         /* Mostrar informacion de articulo */
         for( ActionListener al : b_buscar.getActionListeners() ) {
             b_buscar.removeActionListener( al );
         }
+        System.out.println("5");
         b_buscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 b_buscarActionPerformed2(evt);
             }
         });
+        System.out.println("6");
     }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -61,7 +62,6 @@ public class UpdateArticulo extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel4 = new javax.swing.JPanel();
         panel_busqueda = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         titulo_info = new javax.swing.JLabel();
@@ -73,35 +73,19 @@ public class UpdateArticulo extends javax.swing.JDialog {
         panel_update = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        t_producto = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        t_descripcion = new javax.swing.JTextArea();
-        t_categoria = new javax.swing.JTextField();
+        t_name = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        t_cantidad = new javax.swing.JTextField();
+        t_direccion = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        t_precioV = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
-        t_precioC = new javax.swing.JTextField();
+        t_telefono = new javax.swing.JTextField();
+        t_email = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        t_ci = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
-
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new javax.swing.BoxLayout(getContentPane(), javax.swing.BoxLayout.LINE_AXIS));
@@ -114,7 +98,7 @@ public class UpdateArticulo extends javax.swing.JDialog {
         titulo_info.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         titulo_info.setForeground(new java.awt.Color(255, 255, 255));
         titulo_info.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        titulo_info.setText("Actualizar Producto");
+        titulo_info.setText("Actualizar Cliente");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -122,7 +106,7 @@ public class UpdateArticulo extends javax.swing.JDialog {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(139, 139, 139)
-                .addComponent(titulo_info, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
+                .addComponent(titulo_info, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(120, 120, 120))
         );
         jPanel3Layout.setVerticalGroup(
@@ -137,7 +121,7 @@ public class UpdateArticulo extends javax.swing.JDialog {
 
             },
             new String [] {
-                "ID", "Articulo", "Categoria", "Precio Compra", "Precio Venta", "Cantidad Disp."
+                "N.C.I.", "Nombre", "RUC", "Direccion", "Telefono", "Email"
             }
         ) {
             Class[] types = new Class [] {
@@ -155,21 +139,11 @@ public class UpdateArticulo extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
-        tabla.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tablaMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                tablaMouseEntered(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                tablaMousePressed(evt);
-            }
-        });
         jScrollPane1.setViewportView(tabla);
         if (tabla.getColumnModel().getColumnCount() > 0) {
-            tabla.getColumnModel().getColumn(0).setMinWidth(30);
-            tabla.getColumnModel().getColumn(0).setPreferredWidth(30);
+            tabla.getColumnModel().getColumn(0).setMinWidth(50);
+            tabla.getColumnModel().getColumn(0).setPreferredWidth(50);
+            tabla.getColumnModel().getColumn(4).setPreferredWidth(70);
         }
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
@@ -226,7 +200,7 @@ public class UpdateArticulo extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(b_buscar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 272, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 303, Short.MAX_VALUE))
         );
 
         getContentPane().add(panel_busqueda);
@@ -235,71 +209,54 @@ public class UpdateArticulo extends javax.swing.JDialog {
 
         jPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel2.setText("Producto: ");
-        jPanel6.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, -1, 20));
+        jLabel2.setText("Nombre:");
+        jPanel6.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, -1, 20));
 
-        t_producto.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true));
-        t_producto.addKeyListener(new java.awt.event.KeyAdapter() {
+        t_name.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true));
+        t_name.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                t_productoKeyPressed(evt);
+                t_nameKeyPressed(evt);
             }
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                t_productoKeyReleased(evt);
+                t_nameKeyReleased(evt);
             }
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                t_productoKeyTyped(evt);
+                t_nameKeyTyped(evt);
             }
         });
-        jPanel6.add(t_producto, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 10, 320, 30));
+        jPanel6.add(t_name, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 90, 320, 30));
 
-        jButton2.setText("....");
-        jPanel6.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 60, -1, -1));
+        jLabel5.setText("Direccion:");
+        jPanel6.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 150, -1, -1));
 
-        jLabel8.setText("Imagen:");
-        jPanel6.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 60, -1, 20));
+        jLabel3.setText("Telefono:");
+        jPanel6.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, -1, -1));
 
-        jLabel7.setText("Descripcion:");
-        jPanel6.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, -1, -1));
-
-        t_descripcion.setColumns(20);
-        t_descripcion.setRows(5);
-        jScrollPane2.setViewportView(t_descripcion);
-
-        jPanel6.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 100, 320, 50));
-
-        t_categoria.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true));
-        jPanel6.add(t_categoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 160, 320, 30));
-
-        jLabel5.setText("Categoria: ");
-        jPanel6.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 170, -1, -1));
-
-        jLabel3.setText("Cantidad: ");
-        jPanel6.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 210, -1, -1));
-
-        t_cantidad.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true));
-        t_cantidad.addKeyListener(new java.awt.event.KeyAdapter() {
+        t_direccion.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true));
+        t_direccion.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                t_cantidadKeyTyped(evt);
+                t_direccionKeyTyped(evt);
             }
         });
-        jPanel6.add(t_cantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 200, 320, 30));
+        jPanel6.add(t_direccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 140, 320, 30));
 
-        jLabel6.setText("Precio Venta:");
+        jLabel6.setText("Email:");
         jPanel6.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 250, -1, -1));
 
-        t_precioV.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true));
-        jPanel6.add(t_precioV, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 240, 320, 30));
+        t_telefono.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true));
+        jPanel6.add(t_telefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 190, 320, 30));
 
-        jLabel4.setText("Precio Compra: ");
-        jPanel6.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 290, -1, -1));
-
-        t_precioC.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true));
-        t_precioC.addActionListener(new java.awt.event.ActionListener() {
+        t_email.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true));
+        t_email.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                t_precioCActionPerformed(evt);
+                t_emailActionPerformed(evt);
             }
         });
-        jPanel6.add(t_precioC, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 283, 320, 30));
+        jPanel6.add(t_email, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 240, 320, 30));
+
+        jLabel1.setText("N.C.I.:");
+        jPanel6.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 40, -1, -1));
+        jPanel6.add(t_ci, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 30, 320, 30));
 
         jPanel7.setBackground(new java.awt.Color(0, 153, 153));
 
@@ -307,7 +264,7 @@ public class UpdateArticulo extends javax.swing.JDialog {
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel9.setText("Actualizar Producto");
+        jLabel9.setText("Actualizar Cliente");
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -315,7 +272,7 @@ public class UpdateArticulo extends javax.swing.JDialog {
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addGap(139, 139, 139)
-                .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, 245, Short.MAX_VALUE)
+                .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(120, 120, 120))
         );
         jPanel7Layout.setVerticalGroup(
@@ -360,7 +317,7 @@ public class UpdateArticulo extends javax.swing.JDialog {
             .addGroup(panel_updateLayout.createSequentialGroup()
                 .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, 338, Short.MAX_VALUE)
+                .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, 369, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panel_updateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton3)
@@ -372,43 +329,36 @@ public class UpdateArticulo extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void t_busquedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_t_busquedaActionPerformed
-        // no usado
-    }//GEN-LAST:event_t_busquedaActionPerformed
-
-    private void b_buscarActionPerformed2(java.awt.event.ActionEvent evt) { 
-        resultadosAR info = new resultadosAR(this, true);
+    private void b_buscarActionPerformed2(java.awt.event.ActionEvent evt){
+        resultadosC info = new resultadosC(this, true);
         info.setAlwaysOnTop(true);
         info.setLocationRelativeTo(this);
         String ID = t_busqueda.getText();
         if(ID.equals("")){
-            JOptionPane.showMessageDialog(this, "Ingrese Nombre o ID de producto");
+            JOptionPane.showMessageDialog(this, "Ingrese Cedula");
         }
         //Session st = HibernateUtil.getSessionFactory().openSession();
         //st.beginTransaction();
-        List<Articulo> lista = (List<Articulo>)st.createQuery("From Articulo").list();
+        List<Cliente> lista = (List<Cliente>)st.createQuery("From Cliente").list();
         
         try{
             int id = Integer.parseInt(ID);
-            Articulo pro = (Articulo)st.load(Articulo.class, id
+            Cliente pro = (Cliente)st.load(Cliente.class, id
                 ); 
-                info.llenar(pro.getIdproducto(), pro.getNombreProducto(),
-                            pro.getCantidadDisponible(),pro.getPrecioCompra(),
-                            pro.getPrecioVenta(), pro.getCategoria(),
-                            pro.getImagenproducto(), pro.getDescripcion());
+                info.llenarC(pro.getCedula(), pro.getNombreRazonSocial()
+                        ,pro.getDireccion(), pro.getRuc(),
+                        pro.getTelefono(), pro.getCorreoElectronico());
         }
         catch(Exception e){
             //Nombre ingresado
-            System.out.println("Se ha ingresado un nombre de producto");
-            for (Iterator<Articulo> it = lista.iterator(); it.hasNext();) {
-                Articulo pro = it.next();
-                if(pro.getNombreProducto().equals(ID)){
-                    System.out.println(pro.getIdproducto());
-                    info.llenar(pro.getIdproducto(), pro.getNombreProducto(),
-                              pro.getCantidadDisponible(),pro.getPrecioCompra(),
-                              pro.getPrecioVenta(), pro.getCategoria(),
-                              pro.getImagenproducto(), pro.getDescripcion());
+            System.out.println("Se ha ingresado un ruc de Cliente");
+            for (Iterator<Cliente> it = lista.iterator(); it.hasNext();) {
+                Cliente pro = it.next();
+                if(Integer.toString(pro.getCedula()).equals(ID)){
+                    System.out.println(pro.getCedula());
+                    info.llenarC(pro.getCedula(), pro.getNombreRazonSocial()
+                        ,pro.getDireccion(), pro.getRuc(),
+                        pro.getTelefono(), pro.getCorreoElectronico());
                     t_busqueda.requestFocus();
                     return;
                     }
@@ -420,6 +370,10 @@ public class UpdateArticulo extends javax.swing.JDialog {
         info.setVisible(true);
         t_busqueda.requestFocus();
     }
+    private void t_busquedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_t_busquedaActionPerformed
+        // no usado
+    }//GEN-LAST:event_t_busquedaActionPerformed
+
     private void b_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_buscarActionPerformed
         // Busqueda rapida de actualizacion
         String ID = t_busqueda.getText();
@@ -428,52 +382,47 @@ public class UpdateArticulo extends javax.swing.JDialog {
         }
         //Session st = HibernateUtil.getSessionFactory().openSession();
         //st.beginTransaction();
-        List<Articulo> lista = (List<Articulo>)st.createQuery("From Articulo").list();
-        
+        List<Cliente> lista = (List<Cliente>)st.createQuery("From Cliente").list();
+
         try{
             int id = Integer.parseInt(ID);
-            this.ID = id;
-            Articulo pro = (Articulo)st.load(Articulo.class, id
-                ); 
-                EnviarRes(pro.getIdproducto(), pro.getNombreProducto(),
-                            pro.getCantidadDisponible(),pro.getPrecioCompra(),
-                            pro.getPrecioVenta(), pro.getCategoria(),
-                            pro.getImagenproducto(), pro.getDescripcion());
+            Cliente pro = (Cliente)st.load(Cliente.class, id
+            );
+            EnviarRes(pro.getCedula(), pro.getNombreRazonSocial()
+                        ,pro.getDireccion(), pro.getRuc(),
+                        pro.getTelefono(), pro.getCorreoElectronico());
         }
         catch(Exception e){
             //Nombre ingresado
             System.out.println("Se ha ingresado un nombre de producto");
-            for (Iterator<Articulo> it = lista.iterator(); it.hasNext();) {
-                Articulo pro = it.next();
-                if(pro.getNombreProducto().equals(ID)){
-                    System.out.println(pro.getIdproducto());
-                    EnviarRes(pro.getIdproducto(), pro.getNombreProducto(),
-                              pro.getCantidadDisponible(),pro.getPrecioCompra(),
-                              pro.getPrecioVenta(), pro.getCategoria(),
-                              pro.getImagenproducto(), pro.getDescripcion());
+            for (Iterator<Cliente> it = lista.iterator(); it.hasNext();) {
+                Cliente pro = it.next();
+                if(Integer.toString(pro.getCedula()).equals(ID)){
+                    System.out.println(pro.getCedula());
+                    EnviarRes(pro.getCedula(), pro.getNombreRazonSocial()
+                        ,pro.getDireccion(), pro.getRuc(),
+                        pro.getTelefono(), pro.getCorreoElectronico());
                     t_busqueda.requestFocus();
                     panel_busqueda.setVisible(false);
                     panel_update.setVisible(true);
-                    this.ID = Integer.parseInt(ID);
                     return;
-                    }
                 }
+            }
             JOptionPane.showMessageDialog(this, "No encontrado");
             return;
         }
-        this.ID = Integer.parseInt(ID);
         t_busqueda.requestFocus();
         panel_busqueda.setVisible(false);
         panel_update.setVisible(true);
         //st.close();
     }//GEN-LAST:event_b_buscarActionPerformed
 
-    private void t_productoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_t_productoKeyPressed
+    private void t_nameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_t_nameKeyPressed
         //Muestra lo ingresado despues de ingresar el siguiente caracter
         //System.out.println(t_producto.getText());
-    }//GEN-LAST:event_t_productoKeyPressed
+    }//GEN-LAST:event_t_nameKeyPressed
 
-    private void t_productoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_t_productoKeyReleased
+    private void t_nameKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_t_nameKeyReleased
         /*System.out.println(t_producto.getText());
         Session st = HibernateUtil.getSessionFactory().openSession();
         st.beginTransaction();
@@ -490,21 +439,51 @@ public class UpdateArticulo extends javax.swing.JDialog {
                 b_registrar.setText("Guardar");}
             //System.out.println(pro.getProducto());
         }*/
-    }//GEN-LAST:event_t_productoKeyReleased
+    }//GEN-LAST:event_t_nameKeyReleased
 
-    private void t_productoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_t_productoKeyTyped
+    private void t_nameKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_t_nameKeyTyped
         // Key typed del nombre del producto
 
         //if (!t_producto.getText().equals("")) cont++;
-    }//GEN-LAST:event_t_productoKeyTyped
+    }//GEN-LAST:event_t_nameKeyTyped
 
-    private void t_cantidadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_t_cantidadKeyTyped
+    private void t_direccionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_t_direccionKeyTyped
         //if (!t_cantidad.getText().equals("")) cont++;
-    }//GEN-LAST:event_t_cantidadKeyTyped
+    }//GEN-LAST:event_t_direccionKeyTyped
 
-    private void t_precioCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_t_precioCActionPerformed
+    private void t_emailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_t_emailActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_t_precioCActionPerformed
+    }//GEN-LAST:event_t_emailActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // Actualizar producto
+        String ci, name, dire, ruc, tel, email;
+        ci = t_ci.getText();
+        name = t_name.getText();
+        dire = t_direccion.getText();
+        //ruc = t_ruc.getText();
+        tel = t_telefono.getText();
+        email = t_email.getText();
+        System.out.println(ci);
+        try{
+            //st.beginTransaction();
+            int idArt = Integer.parseInt(ci);
+
+            Cliente cli = (Cliente)st.load(Cliente.class, idArt);
+            cli.setNombreRazonSocial(name);
+            cli.setDireccion(dire);
+            //cli.setRuc(ruc);
+            cli.setTelefono(tel);
+            cli.setCorreoElectronico(email);
+            st.update(cli);
+            st.getTransaction().commit();
+            JOptionPane.showMessageDialog(null, "Registro de cliente actualizado.");
+        }
+        catch(Exception e){
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error - Registro no actualizado.");
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // Volver al jdialog update info
@@ -514,64 +493,6 @@ public class UpdateArticulo extends javax.swing.JDialog {
         panel_busqueda.setVisible(true);
     }//GEN-LAST:event_jButton4ActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // Actualizar producto
-        String producto, cate, precioC, precioV, cant, IDD;
-        IDD = t_busqueda.getText();
-        producto = t_producto.getText();
-        cate = t_categoria.getText();
-        precioC = this.t_precioC.getText();
-        precioV = this.t_precioV.getText();
-        cant = this.t_cantidad.getText();
-        System.out.println(IDD);
-        try{
-            //st.beginTransaction();
-            int idArt = Integer.parseInt(IDD);
-            
-            Articulo art = (Articulo)st.load(Articulo.class, idArt);
-            art.setNombreProducto(producto);
-            //art.setImagenproducto(imagenproducto);
-            art.setCategoria(cate);
-            art.setPrecioCompra(Float.parseFloat(precioC));
-            art.setPrecioVenta(Float.parseFloat(precioV));
-            art.setCantidadDisponible(Integer.parseInt(cant));
-            st.update(art);
-            st.getTransaction().commit();
-            JOptionPane.showMessageDialog(null, "Registro de cliente actualizado.");
-       }
-       catch(Exception e){
-           e.printStackTrace();
-           JOptionPane.showMessageDialog(null, "Error - Registro no actualizado.");
-       }
-    }//GEN-LAST:event_jButton3ActionPerformed
-
-    private void tablaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaMouseClicked
-        // Al hacer un click directo sobre un elemento
-        //System.out.println("Clickeado................");
-        int id = tabla.getSelectedRow() + 1;
-        resultadosAR info = new resultadosAR(this, true);
-        info.setAlwaysOnTop(true);
-        info.setLocationRelativeTo(this);
-        Articulo pro = (Articulo)st.load(Articulo.class, id); 
-        info.llenar(pro.getIdproducto(), pro.getNombreProducto(),
-                pro.getCantidadDisponible(),pro.getPrecioCompra(),
-                pro.getPrecioVenta(), pro.getCategoria(),
-                pro.getImagenproducto(), pro.getDescripcion());
-        this.setVisible(false);
-        info.setVisible(true);
-        //t_busqueda.requestFocus();
-    }//GEN-LAST:event_tablaMouseClicked
-
-    private void tablaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaMouseEntered
-        // Al hacer un click directo sobre un elemento xd
-        //System.out.println("Clickeado...........................");
-    }//GEN-LAST:event_tablaMouseEntered
-
-    private void tablaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaMousePressed
-        // Al hacer un click directo sobre un elemento xdxd
-        //System.out.println("Clickeado......................");
-    }//GEN-LAST:event_tablaMousePressed
-    
     /**
      * @param args the command line arguments
      */
@@ -589,20 +510,20 @@ public class UpdateArticulo extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(UpdateArticulo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(UpdateCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(UpdateArticulo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(UpdateCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(UpdateArticulo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(UpdateCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(UpdateArticulo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(UpdateCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                UpdateArticulo dialog = new UpdateArticulo(new javax.swing.JFrame(), true);
+                UpdateCliente dialog = new UpdateCliente(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -616,53 +537,52 @@ public class UpdateArticulo extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton b_buscar;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPanel panel_busqueda;
     private javax.swing.JPanel panel_update;
     private javax.swing.JTextField t_busqueda;
-    private javax.swing.JTextField t_cantidad;
-    private javax.swing.JTextField t_categoria;
-    private javax.swing.JTextArea t_descripcion;
-    private javax.swing.JTextField t_precioC;
-    private javax.swing.JTextField t_precioV;
-    private javax.swing.JTextField t_producto;
+    private javax.swing.JLabel t_ci;
+    private javax.swing.JTextField t_direccion;
+    private javax.swing.JTextField t_email;
+    private javax.swing.JTextField t_name;
+    private javax.swing.JTextField t_telefono;
     private javax.swing.JTable tabla;
     private javax.swing.JLabel titulo_info;
     // End of variables declaration//GEN-END:variables
 
-    void LlenarTabla(List<Articulo> lista) {
+    private void EnviarRes(int cedula, String nombreRazonSocial, String direccion, String ruc, String telefono, String correoElectronico) {
+        t_name.setText(nombreRazonSocial);
+        t_direccion.setText(direccion);
+        t_telefono.setText(telefono);
+        t_email.setText(correoElectronico);
+        t_ci.setText(Integer.toString(cedula));
+        //t_ruc.setText();
+    }
+    void LlenarTabla(List<Cliente> lista) {
         //DefaultTableModel dtm= new DefaultTableModel();
         DefaultTableModel dtm = (DefaultTableModel) this.tabla.getModel();
         //System.out.println(ListaProductos.size());
         //Object[] data = new Object[5];
-        for (Iterator<Articulo> it = lista.iterator(); it.hasNext();) {
-            Articulo pro = it.next();
+        for (Iterator<Cliente> it = lista.iterator(); it.hasNext();) {
+            Cliente pro = it.next();
             dtm.addRow(new Object[]{
-                            pro.getIdproducto(),pro.getNombreProducto(),pro.getCategoria(),pro.getPrecioCompra(),
-                            pro.getPrecioVenta(), pro.getCantidadDisponible()
+                            pro.getCedula(), pro.getNombreRazonSocial(),
+                            pro.getRuc(), pro.getDireccion(), pro.getTelefono(),
+                            pro.getCorreoElectronico()
             });
         }
-        this.tabla.getColumnModel().getColumn(0).setPreferredWidth(20);
-        this.tabla.getColumnModel().getColumn(1).setPreferredWidth(200);
-        this.tabla.getColumnModel().getColumn(2).setPreferredWidth(80);
-        this.tabla.getColumnModel().getColumn(3).setPreferredWidth(80);
         tabla.setModel(dtm);
         /*for(int row = 0; row < 2; row++) {
         for(int column = 0; column < 2; column++) {
@@ -675,13 +595,5 @@ public class UpdateArticulo extends javax.swing.JDialog {
             System.out.println(ListaProducto);
         }*/
     }
-
-    private void EnviarRes(Integer idproducto, String nombreProducto, Integer cantidadDisponible, Float precioCompra, Float precioVenta, String categoria, byte[] imagenproducto, String descripcion) {
-        t_producto.setText(nombreProducto);
-        t_cantidad.setText(Integer.toString(cantidadDisponible));
-        t_categoria.setText(categoria);
-        t_precioC.setText(Float.toString(precioCompra));
-        t_precioV.setText(Float.toString(precioVenta));
-        t_descripcion.setText(descripcion);
-    }
 }
+
