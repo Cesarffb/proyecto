@@ -277,6 +277,7 @@ public class regFuncionario extends javax.swing.JDialog {
         t_ape.setText("");
         t_email.setText("");
         t_pass.setText("");
+        t_telefono.setText("");
     }//GEN-LAST:event_b_registrarActionPerformed
 
     private void t_telefonoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_t_telefonoKeyTyped

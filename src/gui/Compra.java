@@ -5,8 +5,13 @@
  */
 package gui;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 import javax.swing.event.ChangeEvent;
@@ -14,6 +19,9 @@ import javax.swing.event.ChangeListener;
 import org.hibernate.Session;
 import sexshop.Articulo;
 import sexshop.Cliente;
+import sexshop.Detalledecompra;
+import sexshop.Detalleventa;
+import sexshop.Funcionario;
 import sexshop.HibernateUtil;
 
 /**
@@ -21,7 +29,8 @@ import sexshop.HibernateUtil;
  * @author ccp
  */
 public class Compra extends javax.swing.JDialog {
-    Session st = HibernateUtil.getSessionFactory().openSession();
+    Calendar c1 = Calendar.getInstance();
+    Session st;
     List<Cliente> listaC;
     List<Articulo> lista;
     public Integer ID;
@@ -29,12 +38,15 @@ public class Compra extends javax.swing.JDialog {
     public String cantidad = "1";
     public String preci = "0";
     public int cantidadVendida;
+    private Funcionario userActive;
+    public int cont;
     /**
      * Creates new form Compra
      */
     public Compra(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
-        st.beginTransaction();
+        //st.beginTransaction();
+        IniciarHibernate();
         this.lista = (List<Articulo>)st.createQuery("From Articulo").list();
         this.listaC = (List<Cliente>)st.createQuery("From Cliente").list();
         initComponents();
@@ -43,11 +55,13 @@ public class Compra extends javax.swing.JDialog {
         b_registrar.setVisible(false);
         control(this.preci);
         t_monto.setText("0");
+        
     }
 
     public Compra(java.awt.Frame parent, boolean modal, Integer ID) {
         super(parent, modal);
-        st.beginTransaction();
+        //st.beginTransaction();
+        IniciarHibernate();
         this.ID = ID;
         this.lista = (List<Articulo>)st.createQuery("From Articulo").list();
         this.listaC = (List<Cliente>)st.createQuery("From Cliente").list();
@@ -56,7 +70,7 @@ public class Compra extends javax.swing.JDialog {
         this.preci = Float.toString(ar.getPrecioVenta());
         b_registrar.setVisible(false);
         control(this.preci);
-        t_monto.setText("0");
+        t_monto.setText(this.preci);
     }
 
     /**
@@ -149,7 +163,7 @@ public class Compra extends javax.swing.JDialog {
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Compra de Articulo");
+        jLabel1.setText("Venta de Articulo");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -174,12 +188,17 @@ public class Compra extends javax.swing.JDialog {
                 s_cantidadStateChanged(evt);
             }
         });
+        s_cantidad.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                s_cantidadKeyReleased(evt);
+            }
+        });
 
         jLabel7.setText("Cantidad a Comprar:");
 
         jLabel8.setText("Monto a Cobrar:");
 
-        jButton1.setText("Comprar");
+        jButton1.setText("Vender");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -300,13 +319,16 @@ public class Compra extends javax.swing.JDialog {
         regCliente REG = new regCliente(null, true, t_ci.getText());
         REG.setLocationRelativeTo(this);
         REG.setVisible(true);
+        st.close();
+        IniciarHibernate();
+        st.beginTransaction();
     }//GEN-LAST:event_b_registrarActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // Ver lista
         List<Articulo> lista = (List<Articulo>)st.createQuery("From Articulo").list();
-        UpdateArticulo inf = new UpdateArticulo(null, true, true);
-        inf.LlenarTabla(lista);
+        UpdateArticulo inf = new UpdateArticulo(null, true, true, null);
+        //inf.LlenarTabla(lista);
         inf.setTitle("Lista de Articulos xd");
         inf.setLocationRelativeTo(this);
         this.setVisible(false);
@@ -327,23 +349,25 @@ public class Compra extends javax.swing.JDialog {
     }//GEN-LAST:event_formFocusLost
 
     private void formWindowGainedFocus(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowGainedFocus
-        System.out.println("Foco ganado");
+        //System.out.println("Foco ganado");
         this.listaC = (List<Cliente>)st.createQuery("From Cliente").list();
         this.preci = t_precio.getText();
         this.canti = t_cantidad.getText();
         //System.out.println("__________Foco____________");
-        System.out.println(this.preci);
-        System.out.println(this.canti);
+        //System.out.println(this.preci);
+        //System.out.println(this.canti);
         //this.revalidate();
+        st.close();
+        IniciarHibernate();
         ver_info();
         //this.repaint();
     }//GEN-LAST:event_formWindowGainedFocus
 
     private void formWindowLostFocus(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowLostFocus
-        System.out.println("Foco perdido");
+        //System.out.println("Foco perdido");
         this.listaC = (List<Cliente>)st.createQuery("From Cliente").list();
         this.preci = t_precio.getText();
-        control(this.preci);
+        //control(this.preci);
         this.canti = t_cantidad.getText();
         //this.revalidate();
         ver_info();
@@ -367,15 +391,7 @@ public class Compra extends javax.swing.JDialog {
 
     private void s_cantidadStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_s_cantidadStateChanged
         //
-        //System.out.println("___________________________________");
-        //int precio = Integer.parseInt(this.preci);
-        //System.out.println(this.preci);
-        //this.canti = s_cantidad.getValue().toString();
-        //String cant = s_cantidad.getValue().toString();
-        //System.out.println(cant);
-        //int mont = (int) (precio * Integer.parseInt(cant)); //(Integer)this.canti
-        //System.out.println(mont);
-        //t_monto.setText(Integer.toString(mont));
+        calcular();
     }//GEN-LAST:event_s_cantidadStateChanged
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -385,18 +401,47 @@ public class Compra extends javax.swing.JDialog {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // Boton comprar
+        Detalleventa det = new Detalleventa();
+        Calendar cal = Calendar.getInstance();
+        cal.clear();
+        int dia = c1.get(Calendar.DATE);
+        int mes = c1.get(Calendar.MONTH)+1;
+        int annio = c1.get(Calendar.YEAR);
+        cal.set(annio, mes, dia);
+        java.util.Date fecha = cal.getTime();
+        System.out.println(fecha);
         try{
-            Articulo art = (Articulo)st.load(Articulo.class, ID);
+            st.beginTransaction();
+            Articulo art = (Articulo)st.load(Articulo.class, this.ID);
             int cantOriginal = art.getCantidadDisponible();
             art.setCantidadDisponible(cantOriginal-this.cantidadVendida);
             st.update(art);
+            System.out.println("Id de articulo: "+art.getIdproducto());
+            System.out.println("Cantidad vendida: : "+this.cantidadVendida);
+            System.out.println("Cedula de cliente: "+this.t_ci.getText());
+            //A compra
+            det.setArticulo(art);
+            det.setCantidad(this.cantidadVendida);
+            det.setClienteCedula(Integer.parseInt((this.t_ci.getText())));
+            det.setFecha(fecha);
+            det.setFuncionario(this.userActive);
+            det.setImporte(Float.parseFloat(t_monto.getText()));
+            
+            st.save(det);
             st.getTransaction().commit();
-            JOptionPane.showMessageDialog(null, "Compra registrada","Listo", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Venta registrada","Listo", JOptionPane.INFORMATION_MESSAGE);
+            this.dispose();
         }
         catch(Exception e){
-            JOptionPane.showMessageDialog(null, "No se pudo registrar la compra", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "No se pudo registrar la Venta", "Error", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void s_cantidadKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_s_cantidadKeyReleased
+        // 
+        calcular();
+    }//GEN-LAST:event_s_cantidadKeyReleased
 
     /**
      * @param args the command line arguments
@@ -448,17 +493,13 @@ public class Compra extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel panel2;
@@ -494,15 +535,18 @@ public class Compra extends javax.swing.JDialog {
     }
 
     private void ver_infoArticulo() {
-        System.out.println(t_nombre.getText());
+        //System.out.println(t_nombre.getText());
         for (Iterator<Articulo> it = lista.iterator(); it.hasNext();) {
             Articulo pro = it.next();
+            //System.out.println("Articulo: "+ pro.getNombreProducto() + " : " + t_nombre.getText());
             if(pro.getNombreProducto().equals(t_nombre.getText())){
                 //System.out.println(pro.getProducto());
+                this.ID = pro.getIdproducto();
                 t_cantidad.setText(Integer.toString(pro.getCantidadDisponible()));
                 t_precio.setText(Float.toString(pro.getPrecioVenta()));
                 this.cantidad = Integer.toString(pro.getCantidadDisponible());
                 this.preci = Float.toString(pro.getPrecioVenta());
+                t_monto.setText(Float.toString(pro.getPrecioVenta()));
                 control(this.preci);
                 break;
             }
@@ -515,7 +559,7 @@ public class Compra extends javax.swing.JDialog {
     }
 
     private Articulo Articulo(Integer ID) {
-        System.out.println(t_nombre.getText());
+        //System.out.println(t_nombre.getText());
         for (Iterator<Articulo> it = lista.iterator(); it.hasNext();) {
             Articulo pro = it.next();
             if(pro.getIdproducto().equals(ID)){
@@ -523,6 +567,7 @@ public class Compra extends javax.swing.JDialog {
                 t_nombre.setText(pro.getNombreProducto());
                 t_cantidad.setText(Integer.toString(pro.getCantidadDisponible()));
                 t_precio.setText(Float.toString(pro.getPrecioVenta()));
+                
                 return pro;
             }
             else{
@@ -535,25 +580,55 @@ public class Compra extends javax.swing.JDialog {
     }
 
     private void control(String preci1) {
+        /*cont++;
+        System.out.println("Veces: "+cont);
         System.out.println("__________control()___");
         this.preci = preci1;
-        System.out.println(this.preci);
+        System.out.println("Precio: " + this.preci);
         System.out.println("____________finControl_");
         s_cantidad.addChangeListener(new ChangeListener() {
         public void stateChanged(ChangeEvent e) {
             Float t = Float.parseFloat(preci1.trim());
+            System.out.println("Float t : " + t);
             //System.out.println("____________metodo_control_______");
             //System.out.println(preci1);
             String cant = ("" + ((JSpinner)e.getSource()).getValue());
             guardarCant(cant);
-            //System.out.println(cant);
+            System.out.println("Cantidad: " + cant);
             int monto = (int) (Integer.parseInt(cant) * t);
-            t_monto.setText(Integer.toString(monto));
-            //System.out.println(monto);    
+            SacarMonto(monto);
+            System.out.println("Monto a pagar: " + monto);
+            return;
             }
-        });
+        });*/
+    }
+    public void SacarMonto(int monto){
+        this.t_monto.setText(Integer.toString(monto));
     }
     public void guardarCant(String cant){
         this.cantidadVendida = Integer.parseInt(cant);
+    }
+
+    private void IniciarHibernate() {
+        st = HibernateUtil.getSessionFactory().openSession();  
+    }
+
+    public void EnviarUser(Funcionario userActive) {
+        this.userActive = userActive;
+    }
+
+    private void calcular() {
+        Float pre = Float.parseFloat(this.preci);
+        int precio = Math.round(pre);
+        //System.out.println("Precio de label: "+this.preci);
+        //System.out.println("Precio: "+precio);
+        String cant = ("" + (s_cantidad.getValue()));
+        this.cantidadVendida = Integer.parseInt(cant);
+        //System.out.println("Cantidad: "+cant);
+        int mont = (int) (precio * Integer.parseInt(cant)); //(Integer)this.canti
+        //System.out.println("Monto: "+mont);
+        //System.out.println(mont);
+        t_monto.setText(Integer.toString(mont));
+        //System.out.println("______________________________________");
     }
 }

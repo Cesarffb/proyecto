@@ -52,9 +52,9 @@ public class AgregarProveedor extends javax.swing.JDialog {
         t_ruc = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        t_pass = new javax.swing.JPasswordField();
         jScrollPane1 = new javax.swing.JScrollPane();
         t_descripcion = new javax.swing.JTextArea();
+        t_direccion = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -177,13 +177,19 @@ public class AgregarProveedor extends javax.swing.JDialog {
 
         jLabel9.setText("Direccion:");
         jPanel5.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 220, -1, -1));
-        jPanel5.add(t_pass, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 210, 360, 30));
 
         t_descripcion.setColumns(20);
         t_descripcion.setRows(5);
         jScrollPane1.setViewportView(t_descripcion);
 
         jPanel5.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 50, 360, 70));
+
+        t_direccion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                t_direccionActionPerformed(evt);
+            }
+        });
+        jPanel5.add(t_direccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 210, 360, 30));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -231,11 +237,12 @@ public class AgregarProveedor extends javax.swing.JDialog {
     private void b_registrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_registrarActionPerformed
         //this.b_registrar.setEnabled(false);
         //this.salir.setEnabled(false);
-        String nombre, telefono, email, descripcion;
+        String nombre, telefono, email, descripcion, dire;
         telefono = t_telefono.getText();
         nombre = t_ruc.getText();
         descripcion = t_descripcion.getText();
         email = t_email.getText();
+        dire = t_direccion.getText();
         if (telefono.equals("") || (nombre.equals("")) || (descripcion.equals("")) ||
             (email.equals(""))) {
             javax.swing.JOptionPane.showMessageDialog(this,"Debe llenar todos los campos \n","AVISO!",javax.swing.JOptionPane.INFORMATION_MESSAGE);
@@ -244,18 +251,20 @@ public class AgregarProveedor extends javax.swing.JDialog {
         else {
             Proveedor p = new Proveedor();
             //p.setNombre(nombre);
+            p.setRuc(nombre);
             p.setCorreoElectronico(email);
             p.setDescripcion(descripcion);
             p.setTelefono(telefono);
+            p.setDireccion(dire);
             st.save(p);
             st.getTransaction().commit();
-            JOptionPane.showMessageDialog(null, "Funcionario agregado.");
+            JOptionPane.showMessageDialog(null, "Proveedor agregado.");
         }
         t_descripcion.setText("");
         t_ruc.setText("");
         t_telefono.setText("");
         t_email.setText("");
-        
+        t_direccion.setText("");
     }//GEN-LAST:event_b_registrarActionPerformed
 
     private void t_telefonoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_t_telefonoKeyTyped
@@ -273,6 +282,10 @@ public class AgregarProveedor extends javax.swing.JDialog {
     private void t_rucKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_t_rucKeyTyped
         // TODO add your handling code here:
     }//GEN-LAST:event_t_rucKeyTyped
+
+    private void t_direccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_t_direccionActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_t_direccionActionPerformed
 
     /**
      * @param args the command line arguments
@@ -332,8 +345,8 @@ public class AgregarProveedor extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton salir;
     private javax.swing.JTextArea t_descripcion;
+    private javax.swing.JTextField t_direccion;
     private javax.swing.JTextField t_email;
-    private javax.swing.JPasswordField t_pass;
     private javax.swing.JTextField t_ruc;
     private javax.swing.JTextField t_telefono;
     private javax.swing.JLabel t_ya;

@@ -1,18 +1,36 @@
 
 package gui;
 
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.io.File;
+import java.io.FileInputStream;
+import java.sql.PreparedStatement;
+import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import org.hibernate.Session;
 import sexshop.Articulo;
+import sexshop.Detalledecompra;
+import sexshop.Funcionario;
 import sexshop.HibernateUtil;
+import sexshop.Proveedor;
 
 /**
  *
  * @author ccp
  */
 public class regArticulo extends javax.swing.JDialog {
+    Calendar c1 = Calendar.getInstance();
+    Session  st;
+    //ArrayList<Imagen> imagenes;
+    String ruta,nombre;
+    public Funcionario userActive;
      //Session st = HibernateUtil.getSessionFactory().openSession();
     /**
      * Creates new form regCliente
@@ -56,6 +74,8 @@ public class regArticulo extends javax.swing.JDialog {
         t_precioV = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         t_precioC = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        t_ruc = new javax.swing.JTextField();
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -65,7 +85,7 @@ public class regArticulo extends javax.swing.JDialog {
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Registro de Productos");
+        jLabel1.setText("Compra de Articulo");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -139,7 +159,7 @@ public class regArticulo extends javax.swing.JDialog {
         jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel2.setText("Producto: ");
-        jPanel5.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, -1, 20));
+        jPanel5.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 60, -1, 20));
 
         t_producto.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true));
         t_producto.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -153,31 +173,36 @@ public class regArticulo extends javax.swing.JDialog {
                 t_productoKeyTyped(evt);
             }
         });
-        jPanel5.add(t_producto, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 10, 360, 30));
+        jPanel5.add(t_producto, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 60, 360, 30));
 
         jButton1.setText("....");
-        jPanel5.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 60, -1, -1));
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanel5.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 100, -1, -1));
 
         jLabel8.setText("Imagen:");
-        jPanel5.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 60, -1, 20));
+        jPanel5.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 100, -1, 20));
 
         jLabel7.setText("Descripcion:");
-        jPanel5.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, -1, -1));
+        jPanel5.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 150, -1, -1));
 
         t_descripcion.setColumns(20);
         t_descripcion.setRows(5);
         jScrollPane1.setViewportView(t_descripcion);
 
-        jPanel5.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 100, 360, 50));
+        jPanel5.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 130, 360, 50));
 
         t_categoria.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true));
-        jPanel5.add(t_categoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 160, 360, 30));
+        jPanel5.add(t_categoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 190, 360, 30));
 
         jLabel5.setText("Categoria: ");
-        jPanel5.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 170, -1, -1));
+        jPanel5.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, -1, -1));
 
         jLabel3.setText("Cantidad: ");
-        jPanel5.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 210, -1, -1));
+        jPanel5.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 240, -1, -1));
 
         t_cantidad.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true));
         t_cantidad.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -185,16 +210,16 @@ public class regArticulo extends javax.swing.JDialog {
                 t_cantidadKeyTyped(evt);
             }
         });
-        jPanel5.add(t_cantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 200, 360, 30));
+        jPanel5.add(t_cantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 230, 360, 30));
 
         jLabel6.setText("Precio Venta:");
-        jPanel5.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 250, -1, -1));
+        jPanel5.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 280, -1, -1));
 
         t_precioV.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true));
-        jPanel5.add(t_precioV, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 240, 360, 30));
+        jPanel5.add(t_precioV, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 270, 360, 30));
 
         jLabel4.setText("Precio Compra: ");
-        jPanel5.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 290, -1, -1));
+        jPanel5.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 320, -1, -1));
 
         t_precioC.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true));
         t_precioC.addActionListener(new java.awt.event.ActionListener() {
@@ -202,7 +227,13 @@ public class regArticulo extends javax.swing.JDialog {
                 t_precioCActionPerformed(evt);
             }
         });
-        jPanel5.add(t_precioC, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 283, 360, 30));
+        jPanel5.add(t_precioC, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 310, 360, 30));
+
+        jLabel9.setText("R.U.C. de Proveedor:");
+        jPanel5.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, -1, -1));
+
+        t_ruc.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true));
+        jPanel5.add(t_ruc, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 10, 330, 30));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -274,8 +305,37 @@ public class regArticulo extends javax.swing.JDialog {
     }//GEN-LAST:event_t_cantidadKeyTyped
 
     private void b_registrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_registrarActionPerformed
-        //this.b_registrar.setEnabled(false);
-        //this.salir.setEnabled(false);
+        //fecha
+        Detalledecompra det = new Detalledecompra();
+        Articulo p = new Articulo();
+        st = HibernateUtil.getSessionFactory().openSession();
+        st.beginTransaction();
+        Calendar cal = Calendar.getInstance();
+        cal.clear();
+        int dia = c1.get(Calendar.DATE);
+        int mes = c1.get(Calendar.MONTH)+1;
+        int annio = c1.get(Calendar.YEAR);
+        cal.set(annio, mes, dia);
+        java.util.Date fecha = cal.getTime();
+        boolean sw=false;
+        List<Proveedor> lista = (List<Proveedor>)st.createQuery("From Proveedor").list();
+        for (Iterator<Proveedor> it = lista.iterator(); it.hasNext();) {
+                Proveedor pro = it.next();
+                System.out.println("Proveedor: "+pro.getRuc());
+                if(pro.getRuc().equals(this.t_ruc.getText())){
+                    det.setProveedor(pro);
+                    sw=false;
+                    break;
+                }
+                else{
+                    sw=true;
+               }
+        }
+        if(sw){
+            JOptionPane.showMessageDialog(null, "Proveedor no encontrado. Debe registrarlo primero");
+            return;
+        }
+        
         String produc, cant, precioV, precioC, cate, desc;
         produc = t_producto.getText();
         cant = t_cantidad.getText();
@@ -290,10 +350,6 @@ public class regArticulo extends javax.swing.JDialog {
             return;
         }
         else {
-            Session  st;
-            st = HibernateUtil.getSessionFactory().openSession();
-            st.beginTransaction();
-            Articulo p = new Articulo();
             //p.setId((short)5); //Innecesario
             p.setNombreProducto(produc);
             p.setPrecioCompra(Float.valueOf(precioC.trim()).floatValue());
@@ -301,13 +357,29 @@ public class regArticulo extends javax.swing.JDialog {
             p.setPrecioVenta(Float.valueOf(precioV.trim()).floatValue());
             p.setCategoria(cate);
             p.setDescripcion(desc);
+            /*try{
+                FileInputStream imagen = new FileInputStream(this.ruta);
+                p.setImagenproducto(IOUtils.toByteArray(imagen));
+            }
+            catch(Exception e){
+                e.printStackTrace();
+            }*/
             st.save(p);
-
-            //int idArt = 2;
+            //A tabla compra
+            det.setArticulo(p);
+            det.setCantidad(Integer.parseInt(cant));
+            det.setFecha(fecha);
+            //System.out.println("Funcionario: "+ this.userActive.getNombre());
+            //det.setFuncionario(this.userActive);
+            det.setImporte(Float.valueOf(precioV.trim()).floatValue());
+            st.getTransaction().commit();
+            st.beginTransaction();
+            st.save(det);
+            //det.setProveedor(proveedor);
             //Productos art = (Productos)st.load(Productos.class, idArt);
             //System.out.println(art.getProducto());
             st.getTransaction().commit();
-            JOptionPane.showMessageDialog(null, "Registro agregado.");
+            JOptionPane.showMessageDialog(null, "Articulo agregado.");
         }
         this.t_descripcion.setText("");
         this.t_producto.setText("");
@@ -316,6 +388,7 @@ public class regArticulo extends javax.swing.JDialog {
         this.t_cantidad.setText("");
         this.t_categoria.setText("");
         this.b_registrar.setEnabled(true);
+        t_ruc.setText("");
         this.salir.setEnabled(true);
     }//GEN-LAST:event_b_registrarActionPerformed
 
@@ -326,6 +399,24 @@ public class regArticulo extends javax.swing.JDialog {
     private void t_precioCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_t_precioCActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_t_precioCActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        final JFileChooser elegirImagen = new JFileChooser();
+        elegirImagen.setMultiSelectionEnabled(false);
+        int o = elegirImagen.showOpenDialog(this);
+        if(o == JFileChooser.APPROVE_OPTION){
+            this.ruta = elegirImagen.getSelectedFile().getAbsolutePath();
+            this.nombre = elegirImagen.getSelectedFile().getName();
+            //jTextField1.setText(ruta);
+            Image preview = Toolkit.getDefaultToolkit().getImage(ruta);
+            /*if(preview != null){
+                jLabel1.setText("");
+                ImageIcon icon = new ImageIcon(preview.getScaledInstance(jLabel1.getWidth(), jLabel1.getHeight(), Image.SCALE_DEFAULT));
+                jLabel1.setIcon(icon);
+            }*/
+        }
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -383,6 +474,7 @@ public class regArticulo extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -396,6 +488,11 @@ public class regArticulo extends javax.swing.JDialog {
     private javax.swing.JTextField t_precioC;
     private javax.swing.JTextField t_precioV;
     private javax.swing.JTextField t_producto;
+    private javax.swing.JTextField t_ruc;
     private javax.swing.JLabel t_ya;
     // End of variables declaration//GEN-END:variables
+
+    void FuncionarioA(Funcionario userActive) {
+        this.userActive = userActive;
+    }
 }

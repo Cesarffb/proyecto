@@ -20,6 +20,7 @@ public class menu extends javax.swing.JFrame {
     Session st = HibernateUtil.getSessionFactory().openSession();
     Calendar c1 = Calendar.getInstance();
     static final int CILIMITE = 1000000;
+    private Funcionario userActive;
     /**
      * Creates new form menu
      */
@@ -54,6 +55,8 @@ public class menu extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        t_user = new javax.swing.JLabel();
+        jButton8 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -78,9 +81,11 @@ public class menu extends javax.swing.JFrame {
         b_listaFuncionarios = new javax.swing.JButton();
         b_abastecer = new javax.swing.JButton();
         b_listaProveedores = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
+        b_proveedor = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jPanel1.setBackground(java.awt.SystemColor.inactiveCaptionBorder);
 
         jPanel2.setBackground(new java.awt.Color(0, 153, 153));
 
@@ -89,20 +94,42 @@ public class menu extends javax.swing.JFrame {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Menu Principal");
 
+        t_user.setForeground(new java.awt.Color(255, 255, 255));
+        t_user.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        t_user.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/user.png"))); // NOI18N
+
+        jButton8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/cerrar.png"))); // NOI18N
+        jButton8.setBorderPainted(false);
+        jButton8.setContentAreaFilled(false);
+        jButton8.setFocusPainted(false);
+        jButton8.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/img/cerrar_hover.png"))); // NOI18N
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(t_user, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(t_user, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -165,8 +192,11 @@ public class menu extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        t_busqueda.setBackground(java.awt.SystemColor.control);
+        jPanel4.setBackground(java.awt.SystemColor.inactiveCaptionBorder);
+
+        t_busqueda.setBackground(java.awt.SystemColor.inactiveCaptionBorder);
         t_busqueda.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        t_busqueda.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         t_busqueda.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 153, 153), 1, true), "Busqueda rapida: ", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 10))); // NOI18N
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -186,7 +216,9 @@ public class menu extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jButton1.setText("Buscar");
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/buscar_normal.png"))); // NOI18N
+        jButton1.setBorderPainted(false);
+        jButton1.setContentAreaFilled(false);
         jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButton1MouseClicked(evt);
@@ -198,6 +230,7 @@ public class menu extends javax.swing.JFrame {
             }
         });
 
+        jPanel5.setBackground(java.awt.SystemColor.inactiveCaptionBorder);
         jPanel5.setBorder(javax.swing.BorderFactory.createCompoundBorder());
         jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -251,6 +284,7 @@ public class menu extends javax.swing.JFrame {
         });
         jPanel5.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 180, 120));
 
+        jPanel6.setBackground(java.awt.SystemColor.inactiveCaptionBorder);
         jPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/listaC_normal.png"))); // NOI18N
@@ -279,7 +313,7 @@ public class menu extends javax.swing.JFrame {
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/regC_normal.png"))); // NOI18N
         jButton3.setBorderPainted(false);
         jButton3.setContentAreaFilled(false);
-        jButton3.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/img/regC_hover.png"))); // NOI18N
+        jButton3.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/img/recC_hover.png"))); // NOI18N
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
@@ -298,28 +332,48 @@ public class menu extends javax.swing.JFrame {
         });
         jPanel6.add(b_eliminarCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 120, 180, 120));
 
-        b_funcionario.setText("Agregar Funcionario");
+        b_funcionario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/agregarfunc_normal.png"))); // NOI18N
+        b_funcionario.setToolTipText("");
+        b_funcionario.setBorderPainted(false);
+        b_funcionario.setContentAreaFilled(false);
+        b_funcionario.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/img/agregarfunc_hover.png"))); // NOI18N
         b_funcionario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 b_funcionarioActionPerformed(evt);
             }
         });
 
-        b_listaFuncionarios.setText("Lista de Funcionarios");
+        b_listaFuncionarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/listaFuncionarios_normal.png"))); // NOI18N
+        b_listaFuncionarios.setBorderPainted(false);
+        b_listaFuncionarios.setContentAreaFilled(false);
+        b_listaFuncionarios.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/img/listaFuncionarios_hover.png"))); // NOI18N
         b_listaFuncionarios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 b_listaFuncionariosActionPerformed(evt);
             }
         });
 
-        b_abastecer.setText("Abastecer Almacen");
+        b_abastecer.setBorderPainted(false);
+        b_abastecer.setContentAreaFilled(false);
+        b_abastecer.setEnabled(false);
 
-        b_listaProveedores.setText("Lista de Proveedores");
-
-        jButton7.setText("Agregar Proveedor");
-        jButton7.addActionListener(new java.awt.event.ActionListener() {
+        b_listaProveedores.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/listaProveedores_normal.png"))); // NOI18N
+        b_listaProveedores.setBorderPainted(false);
+        b_listaProveedores.setContentAreaFilled(false);
+        b_listaProveedores.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/img/listaFuncionarios_hover.png"))); // NOI18N
+        b_listaProveedores.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton7ActionPerformed(evt);
+                b_listaProveedoresActionPerformed(evt);
+            }
+        });
+
+        b_proveedor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/agregarProveedor_normal.png"))); // NOI18N
+        b_proveedor.setBorderPainted(false);
+        b_proveedor.setContentAreaFilled(false);
+        b_proveedor.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/img/agregarfunc_hover.png"))); // NOI18N
+        b_proveedor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                b_proveedorActionPerformed(evt);
             }
         });
 
@@ -331,28 +385,30 @@ public class menu extends javax.swing.JFrame {
             .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(77, Short.MAX_VALUE)
+                .addContainerGap(58, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(b_funcionario, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(32, 32, 32)
+                        .addComponent(b_listaFuncionarios, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(42, 42, 42)
+                        .addComponent(b_abastecer, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(105, 105, 105)
-                        .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(b_funcionario)
-                        .addGap(33, 33, 33)
-                        .addComponent(b_listaFuncionarios)
-                        .addGap(35, 35, 35)
-                        .addComponent(b_abastecer, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(35, 35, 35)
-                        .addComponent(b_listaProveedores)
-                        .addGap(36, 36, 36)
-                        .addComponent(jButton7)))
-                .addContainerGap(77, Short.MAX_VALUE))
+                        .addGap(125, 125, 125)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                        .addGap(15, 15, 15)
+                        .addComponent(b_listaProveedores, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(32, 32, 32)
+                        .addComponent(b_proveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(58, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -363,23 +419,19 @@ public class menu extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(11, 11, 11)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(b_funcionario, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(b_listaFuncionarios, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(b_abastecer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(b_listaProveedores, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton7)))
+                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 25, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(b_funcionario, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(b_listaFuncionarios, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(b_abastecer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(b_listaProveedores, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(b_proveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(24, 24, 24)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
-
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {b_abastecer, b_funcionario, b_listaFuncionarios, b_listaProveedores, jButton7});
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -402,14 +454,9 @@ public class menu extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         //Mostrar Informe de Articulos
         List ListaProductos = new ArrayList(); //No usado
-        List<Articulo> lista = (List<Articulo>)st.createQuery("From Articulo").list();
-        for (Iterator<Articulo> it = lista.iterator(); it.hasNext();) {
-            Articulo pro = it.next();
-            //System.out.println(pro.getProducto());
-            ListaProductos.add(pro);
-        }
-        UpdateArticulo inf = new UpdateArticulo(this, true, true);
-        inf.LlenarTabla(lista);
+        //List<Articulo> lista = (List<Articulo>)st.createQuery("From Articulo").list();
+        UpdateArticulo inf = new UpdateArticulo(this, true, true, userActive);
+        //inf.LlenarTabla(lista);
         inf.setTitle("Lista de Articulos xd");
         inf.setLocationRelativeTo(this);
         inf.setVisible(true);
@@ -420,14 +467,14 @@ public class menu extends javax.swing.JFrame {
         regArticulo form = new regArticulo(this, true);
         form.setLocationRelativeTo(this);
         form.setVisible(true);
+        System.out.println(this.userActive.getNombre());
+        form.FuncionarioA(this.userActive);
         this.updateAll();
     }//GEN-LAST:event_regProductoActionPerformed
 
     private void actProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actProductoActionPerformed
         // Actualizar Producto
         UpdateArticulo form = new UpdateArticulo(this, true);
-        //Session st = HibernateUtil.getSessionFactory().openSession();
-        //st.beginTransaction();
         List<Articulo> lista = (List<Articulo>)st.createQuery("From Articulo").list();
         form.LlenarTabla(lista);
         form.setLocationRelativeTo(this);
@@ -469,11 +516,11 @@ public class menu extends javax.swing.JFrame {
         }
         catch(Exception e){
             //Nombre o RUC ingresado
-            System.out.println("Se ha ingresado un nombre de producto");
+            //System.out.println("Se ha ingresado un nombre de producto");
             for (Iterator<Articulo> it = lista.iterator(); it.hasNext();) {
                 Articulo pro = it.next();
                 if(pro.getNombreProducto().equals(ID)){
-                    System.out.println(pro.getIdproducto());
+                    //System.out.println(pro.getIdproducto());
                     EnviarRes(pro.getIdproducto(), pro.getNombreProducto(),
                               pro.getCantidadDisponible(),pro.getPrecioCompra(),
                               pro.getPrecioVenta(), pro.getCategoria(),
@@ -505,31 +552,36 @@ public class menu extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // Lista de clientes
-        //List ListaClientes = new ArrayList(); //No usado
-        //st.beginTransaction();
         List<Cliente> lista = (List<Cliente>)st.createQuery("From Cliente").list();
-        System.out.println("1");
+        //System.out.println("1");
         /*for (Iterator<Cliente> it = lista.iterator(); it.hasNext();) {
             Cliente pro = it.next();
             //System.out.println(pro.getProducto());
             ListaClientes.add(pro);
         }*/
         UpdateCliente inf = new UpdateCliente(this, true, true);
-        System.out.println("2");
+        //System.out.println("2");
         inf.LlenarTabla(lista);
-        System.out.println("3");
-        inf.setTitle("Lista de Articulos xd");
+        //System.out.println("3");
+        inf.setTitle("Lista de Clientes");
         inf.setLocationRelativeTo(this);
         inf.setVisible(true);
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void b_eliminarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_eliminarClienteActionPerformed
-        // TODO add your handling code here:
+        // Eliminar Cliente
+        List<Cliente> lista = (List<Cliente>)st.createQuery("From Cliente").list();
+        UpdateCliente inf = new UpdateCliente(this, true, true);
+        inf.LlenarTabla(lista);
+        inf.setTitle("Lista de Clientes");
+        inf.setLocationRelativeTo(this);
+        inf.setVisible(true);
     }//GEN-LAST:event_b_eliminarClienteActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // Compra de articulos
         Compra com = new Compra(this, true);
+        com.EnviarUser(this.userActive);
         com.setLocationRelativeTo(this);
         com.setVisible(true);
     }//GEN-LAST:event_jButton6ActionPerformed
@@ -544,20 +596,36 @@ public class menu extends javax.swing.JFrame {
 
     private void b_listaFuncionariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_listaFuncionariosActionPerformed
         // lista de funcionarios
-        List<Funcionario> listaF = (List<Funcionario>)st.createQuery("From Funcionario").list();
+        //List<Funcionario> listaF = (List<Funcionario>)st.createQuery("From Funcionario").list();
         listaFuncionarios inf = new listaFuncionarios(this, true);
-        inf.LlenarTabla(listaF);
+        //inf.LlenarTabla(listaF);
         inf.setTitle("Lista de Funcionarios");
         inf.setLocationRelativeTo(this);
         inf.setVisible(true);
     }//GEN-LAST:event_b_listaFuncionariosActionPerformed
 
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+    private void b_proveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_proveedorActionPerformed
         // Agregar Proveedor
         AgregarProveedor ag = new AgregarProveedor(this, true);
         ag.setLocationRelativeTo(this);
         ag.setVisible(true);
-    }//GEN-LAST:event_jButton7ActionPerformed
+    }//GEN-LAST:event_b_proveedorActionPerformed
+
+    private void b_listaProveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_listaProveedoresActionPerformed
+        // Lista de proveedores
+        listaProveedores li = new listaProveedores(this, true);
+        li.setLocationRelativeTo(this);
+        li.setVisible(true);
+        
+    }//GEN-LAST:event_b_listaProveedoresActionPerformed
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        // Cerrar sesion
+        Login l = new Login();
+        this.dispose();
+        l.setLocationRelativeTo(null);
+        l.setVisible(true);
+    }//GEN-LAST:event_jButton8ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -601,6 +669,7 @@ public class menu extends javax.swing.JFrame {
     private javax.swing.JButton b_funcionario;
     private javax.swing.JButton b_listaFuncionarios;
     private javax.swing.JButton b_listaProveedores;
+    private javax.swing.JButton b_proveedor;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
@@ -608,7 +677,7 @@ public class menu extends javax.swing.JFrame {
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton8;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -624,11 +693,13 @@ public class menu extends javax.swing.JFrame {
     private javax.swing.JLabel t_cantidad;
     private javax.swing.JLabel t_clientes;
     private javax.swing.JLabel t_fecha;
+    private javax.swing.JLabel t_user;
     // End of variables declaration//GEN-END:variables
 
     private void EnviarRes(Integer idproducto, String nombreProducto, Integer cantidadDisponible, Float precioCompra, Float precioVenta, String categoria, byte[] imagenproducto, String descripcion) {
         /*Resultados de busqueda rapida por ID o nombre de articulos*/
         resultadosAR RE = new resultadosAR(this, true);
+        RE.Vendedor(this.userActive);
         RE.llenar(idproducto, nombreProducto, cantidadDisponible, precioCompra,
                 precioVenta, categoria, imagenproducto, descripcion);
         RE.setLocationRelativeTo(this);
@@ -676,6 +747,12 @@ public class menu extends javax.swing.JFrame {
         this.b_listaFuncionarios.setVisible(false);
         this.b_funcionario.setVisible(false);
         this.b_eliminarCliente.setVisible(false);
+        this.b_proveedor.setVisible(false);
+    }
+
+    void enviarUser(Funcionario pro) {
+        this.userActive = pro;
+        this.t_user.setText(pro.getNombre());
     }
 }
 

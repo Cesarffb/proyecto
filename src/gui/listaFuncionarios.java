@@ -26,6 +26,8 @@ Session st = HibernateUtil.getSessionFactory().openSession();
         super(parent, modal);
         initComponents();
         st.beginTransaction();
+        List<Funcionario> lista = (List<Funcionario>)st.createQuery("From Funcionario").list();
+        LlenarTabla(lista);
     }
 
     /**
@@ -37,6 +39,8 @@ Session st = HibernateUtil.getSessionFactory().openSession();
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPopupMenu2 = new javax.swing.JPopupMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
         panel_busqueda = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         titulo_info = new javax.swing.JLabel();
@@ -45,6 +49,14 @@ Session st = HibernateUtil.getSessionFactory().openSession();
         jPanel2 = new javax.swing.JPanel();
         t_busqueda = new javax.swing.JTextField();
         b_buscar = new javax.swing.JButton();
+
+        jMenuItem1.setText("Eliminar");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jPopupMenu2.add(jMenuItem1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -97,6 +109,7 @@ Session st = HibernateUtil.getSessionFactory().openSession();
                 return canEdit [columnIndex];
             }
         });
+        tabla.setComponentPopupMenu(jPopupMenu2);
         jScrollPane1.setViewportView(tabla);
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
@@ -223,6 +236,11 @@ Session st = HibernateUtil.getSessionFactory().openSession();
         //st.close();
     }//GEN-LAST:event_b_buscarActionPerformed
 
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        System.out.println("Elimino");
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -267,8 +285,10 @@ Session st = HibernateUtil.getSessionFactory().openSession();
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton b_buscar;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPopupMenu jPopupMenu2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel panel_busqueda;
     private javax.swing.JTextField t_busqueda;

@@ -1,24 +1,33 @@
 package gui;
 
+import javax.swing.JOptionPane;
+import org.hibernate.Session;
+import sexshop.Articulo;
+import sexshop.Funcionario;
+import sexshop.HibernateUtil;
+
 /**
  *
  * @author ccp
  */
 public class resultadosAR extends javax.swing.JDialog {
-
+    Session st = HibernateUtil.getSessionFactory().openSession();
     private UpdateArticulo u;
     public Integer ID;
+    public Funcionario userActive;
     /**
      * Creates new form resultadosAR
      */
     public resultadosAR(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        st.beginTransaction();
         b_atras.setVisible(false);
     }
     public resultadosAR(UpdateArticulo aThis, boolean b) {
         initComponents();
         this.u = aThis;
+        st.beginTransaction();
         b_atras.setVisible(true);
     }
 
@@ -131,26 +140,29 @@ public class resultadosAR extends javax.swing.JDialog {
         image.setText("X");
         jPanel3.add(image, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 20, 240, 110));
 
-        jButton1.setText("Comprar");
+        jButton1.setText("Vender");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
-        jPanel3.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(323, 380, 110, -1));
+        jPanel3.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(323, 380, 110, 30));
 
         jButton2.setText("Eliminar");
-        jButton2.setEnabled(false);
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
             }
         });
-        jPanel3.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 380, 70, -1));
+        jPanel3.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 380, 70, 30));
 
         jButton3.setText("Actualizar");
-        jButton3.setEnabled(false);
-        jPanel3.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 380, -1, -1));
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        jPanel3.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 380, -1, 30));
 
         b_atras.setText("Atras");
         b_atras.addActionListener(new java.awt.event.ActionListener() {
@@ -158,7 +170,7 @@ public class resultadosAR extends javax.swing.JDialog {
                 b_atrasActionPerformed(evt);
             }
         });
-        jPanel3.add(b_atras, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 380, -1, -1));
+        jPanel3.add(b_atras, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 380, -1, 30));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -195,13 +207,41 @@ public class resultadosAR extends javax.swing.JDialog {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // Llamar a una ventana para seleccionar un cliente o registrarlo xd
         Compra comp = new Compra(null, true, this.ID);
+        comp.EnviarUser(this.userActive);
         comp.setLocationRelativeTo(this);
-        this.setVisible(false);
+        this.dispose();
         comp.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // Para eliminar el producto de la db
+        // Si es 0 es si, 1 no, 2 cancelar
+        int opcion = JOptionPane.showConfirmDialog(this, "Estas seguro?");
+        switch(opcion){
+            case(0):{
+                //Eliminar articulo
+                try{
+                    Articulo art = (Articulo)st.load(Articulo.class, this.ID);
+                    st.delete(art);
+                    st.getTransaction().commit();
+                    this.dispose();
+                    JOptionPane.showMessageDialog(null, "Articulo eliminado.");
+                }
+                catch(Exception e){
+                    this.dispose();
+                    JOptionPane.showMessageDialog(null, "No se pudo eliminar el registro");
+                    e.printStackTrace();
+                }
+                break;
+            }
+            case(1):{
+                JOptionPane.showMessageDialog(null, "Articulo no eliminado :)");
+                break;
+            }
+            case(2):{
+                break;
+            }
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void b_atrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_atrasActionPerformed
@@ -212,6 +252,17 @@ public class resultadosAR extends javax.swing.JDialog {
         this.setVisible(false);
         this.u.setVisible(true);
     }//GEN-LAST:event_b_atrasActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // Actualizar
+        UpdateArticulo up = new UpdateArticulo(null,true,this.ID);
+        this.dispose();
+        up.setLocationRelativeTo(null);
+        //up.b_atras.setVisible(false);
+        up.EnviarResA(this.ID, res_articulo.getText(), res_cantidad.getText() ,res_categoria.getText(),
+                    res_descripcion.getText(), res_precioV.getText(), res_precioC.getText());
+        up.setVisible(true);
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -286,5 +337,9 @@ public class resultadosAR extends javax.swing.JDialog {
         res_descripcion.setText(descripcion);
         res_precioC.setText(Float.toString(precioCompra));
         res_precioV.setText(Float.toString(precioVenta));
+    }
+
+    public void Vendedor(Funcionario userActive) {
+        this.userActive = userActive;
     }
 }

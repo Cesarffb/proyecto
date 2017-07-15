@@ -20,6 +20,7 @@ import sexshop.HibernateUtil;
  */
 public class UpdateCliente extends javax.swing.JDialog {
     Session st = HibernateUtil.getSessionFactory().openSession();
+    public int cedula;
     /**
      * Creates new form UpdateCliente
      * @param parent
@@ -53,6 +54,15 @@ public class UpdateCliente extends javax.swing.JDialog {
         });
         System.out.println("6");
     }
+
+    public UpdateCliente(java.awt.Frame parent, boolean modal, int Cedula) {
+        super(parent, modal);
+        initComponents();
+        st.beginTransaction();
+        this.panel_busqueda.setVisible(false);
+        this.setSize(550, 460);
+        
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -85,7 +95,7 @@ public class UpdateCliente extends javax.swing.JDialog {
         jPanel7 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        b_atras = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new javax.swing.BoxLayout(getContentPane(), javax.swing.BoxLayout.LINE_AXIS));
@@ -137,6 +147,11 @@ public class UpdateCliente extends javax.swing.JDialog {
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        tabla.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaMouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(tabla);
@@ -289,10 +304,10 @@ public class UpdateCliente extends javax.swing.JDialog {
             }
         });
 
-        jButton4.setText("Atras");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        b_atras.setText("Atras");
+        b_atras.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                b_atrasActionPerformed(evt);
             }
         });
 
@@ -306,7 +321,7 @@ public class UpdateCliente extends javax.swing.JDialog {
                 .addGroup(panel_updateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_updateLayout.createSequentialGroup()
-                        .addComponent(jButton4)
+                        .addComponent(b_atras)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton3)
                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -321,7 +336,7 @@ public class UpdateCliente extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panel_updateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton3)
-                    .addComponent(jButton4))
+                    .addComponent(b_atras))
                 .addGap(5, 5, 5))
         );
 
@@ -485,13 +500,41 @@ public class UpdateCliente extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void b_atrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_atrasActionPerformed
         // Volver al jdialog update info
         t_busqueda.setText("");
         t_busqueda.requestFocus();
         panel_update.setVisible(false);
         panel_busqueda.setVisible(true);
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_b_atrasActionPerformed
+
+    private void tablaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaMouseClicked
+        // 
+        DefaultTableModel dtm = (DefaultTableModel) this.tabla.getModel();
+        System.out.println("tabla Mouse Clicked");
+        //int c=1;
+        //int id = tabla.getSelectedRow();
+        List<Cliente> listaC = (List<Cliente>)st.createQuery("From Cliente").list();
+        /*for (Iterator<Cliente> it = listaC.iterator(); it.hasNext();) {
+            Cliente pro = it.next();
+            this.cedula = pro.getCedula();
+            if(c==id) break;
+            c++;
+        }*/
+        int selectedRow = this.tabla.getSelectedRow();
+        Object valueAt = dtm.getValueAt(selectedRow, 0);
+        int idCli = Integer.parseInt(valueAt.toString());
+        Cliente pro = (Cliente)st.load(Cliente.class, idCli);
+        
+        resultadosC info = new resultadosC(this, true);
+        info.setAlwaysOnTop(true);
+        info.setLocationRelativeTo(this); 
+        info.llenarC(pro.getCedula(), pro.getNombreRazonSocial(), pro.getDireccion(),
+                     pro.getRuc() ,pro.getTelefono() ,
+                     pro.getCorreoElectronico());
+        this.setVisible(false);
+        info.setVisible(true);
+    }//GEN-LAST:event_tablaMouseClicked
 
     /**
      * @param args the command line arguments
@@ -504,7 +547,7 @@ public class UpdateCliente extends javax.swing.JDialog {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
@@ -536,9 +579,9 @@ public class UpdateCliente extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    public javax.swing.JButton b_atras;
     private javax.swing.JButton b_buscar;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -562,7 +605,7 @@ public class UpdateCliente extends javax.swing.JDialog {
     private javax.swing.JLabel titulo_info;
     // End of variables declaration//GEN-END:variables
 
-    private void EnviarRes(int cedula, String nombreRazonSocial, String direccion, String ruc, String telefono, String correoElectronico) {
+    public void EnviarRes(int cedula, String nombreRazonSocial, String direccion, String ruc, String telefono, String correoElectronico) {
         t_name.setText(nombreRazonSocial);
         t_direccion.setText(direccion);
         t_telefono.setText(telefono);
@@ -571,8 +614,8 @@ public class UpdateCliente extends javax.swing.JDialog {
         //t_ruc.setText();
     }
     void LlenarTabla(List<Cliente> lista) {
-        //DefaultTableModel dtm= new DefaultTableModel();
         DefaultTableModel dtm = (DefaultTableModel) this.tabla.getModel();
+        //DefaultTableModel dtm= new DefaultTableModel();
         //System.out.println(ListaProductos.size());
         //Object[] data = new Object[5];
         for (Iterator<Cliente> it = lista.iterator(); it.hasNext();) {

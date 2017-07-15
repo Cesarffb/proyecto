@@ -5,23 +5,31 @@
  */
 package gui;
 
+import javax.swing.JOptionPane;
+import org.hibernate.Session;
+import sexshop.Cliente;
+import sexshop.HibernateUtil;
+
 /**
  *
  * @author ccp
  */
 public class resultadosC extends javax.swing.JFrame {
-
+    Session st = HibernateUtil.getSessionFactory().openSession();
     private UpdateCliente u;
+    private int Cedula;
 
     /**
      * Creates new form resultadosC
      */
     public resultadosC() {
         initComponents();
+        st.beginTransaction();
     }
 
-    resultadosC(UpdateCliente aThis, boolean b) {
+    public resultadosC(UpdateCliente aThis, boolean b) {
         initComponents();
+        st.beginTransaction();
         this.u = aThis;
         b_atras.setVisible(true);
     }
@@ -110,11 +118,19 @@ public class resultadosC extends javax.swing.JFrame {
         jPanel3.add(res_email, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 200, 210, 20));
 
         jButton1.setText("Actualizar");
-        jButton1.setEnabled(false);
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
         jPanel3.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 260, -1, -1));
 
         jButton2.setText("Eliminar");
-        jButton2.setEnabled(false);
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
         jPanel3.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 260, -1, -1));
 
         b_atras.setText("Atras");
@@ -155,9 +171,52 @@ public class resultadosC extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void b_atrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_atrasActionPerformed
-        this.setVisible(false);
+        this.dispose();
         this.u.setVisible(true);
     }//GEN-LAST:event_b_atrasActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // Boton Borrar
+        // Si es 0 es si, 1 no, 2 cancelar
+        int opcion = JOptionPane.showConfirmDialog(this, "Estas seguro?");
+        switch(opcion){
+            case(0):{
+                //Eliminar cliente
+                try{
+                    int ce = Integer.parseInt(res_cedula.getText());
+                    Cliente art = (Cliente)st.load(Cliente.class, ce);
+                    st.delete(art);
+                    st.getTransaction().commit();
+                    this.dispose();
+                    JOptionPane.showMessageDialog(null, "Cliente eliminado.");
+                }
+                catch(Exception e){
+                    this.dispose();
+                    JOptionPane.showMessageDialog(null, "No se pudo eliminar el registro");
+                    e.printStackTrace();
+                }
+                break;
+            }
+            case(1):{
+                System.out.println("1");
+                break;
+            }
+            case(2):{
+                break;
+            }
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // Boton actualizar
+        UpdateCliente up = new UpdateCliente(null,true,this.Cedula);
+        this.dispose();
+        up.setLocationRelativeTo(null);
+        up.b_atras.setVisible(false);
+        up.EnviarRes(this.Cedula, res_nombre.getText(), res_direccion.getText(),
+                    null, res_telefono.getText(), res_email.getText());
+        up.setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -195,6 +254,7 @@ public class resultadosC extends javax.swing.JFrame {
     }
 
     void llenarC(int cedula, String nombreRazonSocial, String direccion, String ruc, String telefono, String correoElectronico) {
+        this.Cedula = cedula;
         res_cedula.setText(Integer.toString(cedula));
         res_nombre.setText(nombreRazonSocial);
         res_direccion.setText(direccion);
@@ -221,4 +281,5 @@ public class resultadosC extends javax.swing.JFrame {
     private javax.swing.JLabel res_telefono;
     private javax.swing.JLabel t_cedula_ruc;
     // End of variables declaration//GEN-END:variables
+
 }

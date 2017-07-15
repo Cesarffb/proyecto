@@ -4,6 +4,7 @@ package gui;
 import java.util.Iterator;
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import org.hibernate.Session;
 import sexshop.HibernateUtil;
 import sexshop.Proveedor;
@@ -21,6 +22,7 @@ public class listaProveedores extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         st.beginTransaction();
+        LlenarTabla();
     }
 
     /**
@@ -74,14 +76,14 @@ public class listaProveedores extends javax.swing.JDialog {
 
             },
             new String [] {
-                "N.C.I.", "Nombre", "Apellido", "Email", "Pass", "Cargo"
+                "RUC", "Telefono", "Email", "Direccion"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, true, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -90,6 +92,11 @@ public class listaProveedores extends javax.swing.JDialog {
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        tabla.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaMouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(tabla);
@@ -215,6 +222,10 @@ public class listaProveedores extends javax.swing.JDialog {
         //st.close();
     }//GEN-LAST:event_b_buscarActionPerformed
 
+    private void tablaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tablaMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -269,6 +280,22 @@ public class listaProveedores extends javax.swing.JDialog {
     // End of variables declaration//GEN-END:variables
 
     private void EnviarRes(Proveedor pro) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //Llamar a info de Proveedor
+    }
+
+    private void LlenarTabla() {
+        DefaultTableModel dtm = (DefaultTableModel) this.tabla.getModel();
+        //System.out.println(ListaProductos.size());
+        //Object[] data = new Object[5];
+        List<Proveedor> lista = (List<Proveedor>)st.createQuery("From Proveedor").list();
+        
+        for (Iterator<Proveedor> it = lista.iterator(); it.hasNext();) {
+            Proveedor pro = it.next();
+            dtm.addRow(new Object[]{
+                            pro.getRuc(), pro.getTelefono(), pro.getCorreoElectronico()
+                    , pro.getDireccion()
+            });
+        }
+        tabla.setModel(dtm);
     }
 }

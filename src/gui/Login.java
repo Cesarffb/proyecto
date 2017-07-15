@@ -100,9 +100,7 @@ public class Login extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE)
         );
 
         pack();
@@ -132,12 +130,14 @@ public class Login extends javax.swing.JFrame {
                         //Modo admin
                         menu ui = new menu();
                         this.dispose();
+                        ui.enviarUser(pro);
                         ui.setVisible(true);
                         return;
                     }
                     else{
                         //Modo normal
                         menu ui = new menu(false);
+                        ui.enviarUser(pro);
                         this.dispose();
                         ui.setVisible(true);
                         return;

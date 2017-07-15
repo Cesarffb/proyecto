@@ -51,8 +51,6 @@ public class regCliente extends javax.swing.JDialog {
         jLabel2 = new javax.swing.JLabel();
         t_direccion = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        t_ruc = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         t_telefono = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
@@ -164,14 +162,8 @@ public class regCliente extends javax.swing.JDialog {
         jLabel7.setText("Direccion:");
         jPanel5.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 120, -1, -1));
 
-        t_ruc.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true));
-        jPanel5.add(t_ruc, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 160, 360, 30));
-
-        jLabel5.setText("RUC.:");
-        jPanel5.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 170, -1, -1));
-
         jLabel3.setText("Telefono: ");
-        jPanel5.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 220, -1, -1));
+        jPanel5.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 170, -1, -1));
 
         t_telefono.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true));
         t_telefono.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -179,13 +171,13 @@ public class regCliente extends javax.swing.JDialog {
                 t_telefonoKeyTyped(evt);
             }
         });
-        jPanel5.add(t_telefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 210, 360, 30));
+        jPanel5.add(t_telefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 160, 360, 30));
 
         jLabel6.setText("Email:");
-        jPanel5.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 270, -1, -1));
+        jPanel5.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 220, -1, -1));
 
         t_email.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true));
-        jPanel5.add(t_email, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 260, 360, 30));
+        jPanel5.add(t_email, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 210, 360, 30));
 
         t_nombre.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true));
         t_nombre.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -228,8 +220,8 @@ public class regCliente extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 304, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -258,11 +250,11 @@ public class regCliente extends javax.swing.JDialog {
         cedula = t_ci.getText();
         nombre = t_nombre.getText();
         direccion = t_direccion.getText();
-        ruc = t_ruc.getText();
+        //ruc = t_ruc.getText();
         telefono = t_telefono.getText();
         email = t_email.getText();
         //System.out.println(cont);
-        if (cedula.equals("") || (nombre.equals("")) || (direccion.equals("")) || (ruc.equals(""))
+        if (cedula.equals("") || (nombre.equals("")) || (direccion.equals(""))
                 || (telefono.equals(""))|| (email.equals(""))) {
             javax.swing.JOptionPane.showMessageDialog(this,"Debe llenar todos los campos \n","AVISO!",javax.swing.JOptionPane.INFORMATION_MESSAGE);
             t_direccion.requestFocus();
@@ -273,14 +265,12 @@ public class regCliente extends javax.swing.JDialog {
             st = HibernateUtil.getSessionFactory().openSession();
             st.beginTransaction();
             Cliente p = new Cliente();
-            //p.setId((short)5); //Innecesario
             p.setCedula(Integer.parseInt(cedula));
             p.setNombreRazonSocial(nombre);
-            p.setRuc(ruc);
+            //p.setRuc(ruc);
             p.setCorreoElectronico(email);
             p.setDireccion(direccion);
             p.setTelefono(telefono);
-            
             st.save(p);
 
             //int idArt = 2;
@@ -294,7 +284,7 @@ public class regCliente extends javax.swing.JDialog {
         this.t_direccion.setText("");
         this.t_email.setText("");
         this.t_telefono.setText("");
-        this.t_ruc.setText("");
+        //this.t_ruc.setText("");
         this.b_registrar.setEnabled(true);
         this.salir.setEnabled(true);
     }//GEN-LAST:event_b_registrarActionPerformed
@@ -398,7 +388,6 @@ public class regCliente extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
@@ -411,7 +400,6 @@ public class regCliente extends javax.swing.JDialog {
     private javax.swing.JTextField t_direccion;
     private javax.swing.JTextField t_email;
     private javax.swing.JTextField t_nombre;
-    private javax.swing.JTextField t_ruc;
     private javax.swing.JTextField t_telefono;
     private javax.swing.JLabel t_ya;
     // End of variables declaration//GEN-END:variables
